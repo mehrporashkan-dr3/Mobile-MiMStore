@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>فرم درخواست اعتبار اقساطی - موبایل میم‌استور</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      border-right: 3px solid #d32f2f;
+      padding-right: 6px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 9px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row > div {
+      flex: 1;
+    }
+    .radio-group {
+      margin-top: 6px;
+      font-size: 14px;
+    }
+    .radio-group label {
+      display: inline-block;
+      margin-left: 12px;
+    }
+    .terms {
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 15px;
+      border: 1px solid #e0e0e0;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .terms ol {
+      padding-right: 20px;
+      margin: 0;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .checkbox-row input[type="checkbox"] {
+      margin-top: 4px;
+    }
+    .small-note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #d32f2f;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:active {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>فرم درخواست اعتبار اقساطی - موبایل میم‌استور</h1>
+    <p class="note">
+      لطفاً این فرم را با دقت تکمیل کنید. پس از زدن دکمه ارسال، اطلاعات شما در واتساپ
+      فروشگاه ثبت می‌شود و بر اساس آن، بررسی اعتباری انجام خواهد شد.
+    </p>
+
+    <form id="creditForm">
+      <!-- اطلاعات هویتی -->
+      <div class="section-title">۱. اطلاعات هویتی متقاضی</div>
+
+      <label for="fullname">نام و نام خانوادگی</label>
+      <input type="text" id="fullname" placeholder="مثال: علی رضایی">
+
+      <div class="row">
+        <div>
+          <label for="fathername">نام پدر</label>
+          <input type="text" id="fathername">
+        </div>
+        <div>
+          <label for="nationalId">کد ملی</label>
+          <input type="text" id="nationalId" placeholder="۱۰ رقم">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="idNumber">شماره شناسنامه</label>
+          <input type="text" id="idNumber">
+        </div>
+        <div>
+          <label for="birthDate">تاریخ تولد (شمسی)</label>
+          <input type="text" id="birthDate" placeholder="مثال: 1378/05/21">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="issuedFrom">صادره از</label>
+          <input type="text" id="issuedFrom">
+        </div>
+        <div>
+          <label for="postalCode">کد پستی</label>
+          <input type="text" id="postalCode">
+        </div>
+      </div>
+
+      <label for="phone">شماره موبایل به نام خودتان</label>
+      <input type="tel" id="phone" placeholder="مثال: 09XXXXXXXXX">
+
+      <div class="row">
+        <div>
+          <label for="education">مدرک تحصیلی</label>
+          <input type="text" id="education" placeholder="مثال: دیپلم، لیسانس، ...">
+        </div>
+        <div>
+          <label for="jobTitle">شغل</label>
+          <input type="text" id="jobTitle" placeholder="مثال: کارمند، راننده، ...">
+        </div>
+      </div>
+
+      <label for="experienceYears">سابقه کار (چند سال)</label>
+      <input type="text" id="experienceYears" placeholder="مثال: ۳ سال">
+
+      <label for="homeAddress">نشانی کامل محل سکونت</label>
+      <textarea id="homeAddress" rows="3" placeholder="شهر، خیابان، کوچه، پلاک، واحد"></textarea>
+
+      <!-- اطلاعات اعتبار -->
+      <div class="section-title">۲. اطلاعات اعتبار درخواستی</div>
+
+      <label>سقف اعتبار درخواستی</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="creditLimit" value="50">
+          ۵۰ میلیون تومان
+        </label>
+        <label>
+          <input type="radio" name="creditLimit" value="100">
+          ۱۰۰ میلیون تومان (فقط برای خرید آیفون 16 و 17)
+        </label>
+      </div>
+
+      <label for="creditExact">اعتبار مورد نیاز (در صورت کمتر بودن)</label>
+      <input type="text" id="creditExact" placeholder="مثال: ۳۰,۰۰۰,۰۰۰">
+
+      <label for="product">مدل کالا / توضیحات خرید</label>
+      <textarea id="product" rows="2" placeholder="مثال: iPhone 13، Samsung S24 یا توضیحات دیگر"></textarea>
+
+      <label for="extraNote">توضیحات تکمیلی (اختیاری)</label>
+      <textarea id="extraNote" rows="2"></textarea>
+
+      <!-- مدارک لازم -->
+      <div class="section-title">۳. مدارک</div>
+      <p class="small-note">
+        لطفاً عکس واضح روی کارت ملی خود را آماده داشته باشید.
+      </p>
+
+      <label for="idCardFile">آپلود عکس کارت ملی (اختیاری)</label>
+      <input type="file" id="idCardFile" accept="image/*">
+      <p class="small-note">
+        در صورت عدم امکان آپلود، می‌توانید پس از ارسال فرم، عکس کارت ملی را در واتساپ ارسال کنید.
+      </p>
+
+      <!-- شرایط و مقررات -->
+      <div class="section-title">۴. شرایط و مقررات (خلاصه)</div>
+      <div class="terms">
+        <ol>
+          <li>این فرم صرفاً برای بررسی اولیه اعتبار بوده و به‌تنهایی به‌منزله عقد قرارداد قطعی نیست.</li>
+          <li>سقف اعتبار ۵۰ و ۱۰۰ میلیون است که سقف ۱۰۰ فقط برای خرید آیفون 16 و 17 استفاده می‌شود.</li>
+          <li>مبلغ ۲۵۰,۰۰۰ تومان بابت هزینه بررسی، استعلام و تشکیل پرونده دریافت می‌شود و در هیچ شرایطی قابل استرداد نیست.</li>
+          <li>مسؤولیت صحت اطلاعات و مدارک ارائه‌شده به عهده متقاضی است و واحد اعتباری مجاز به استعلام از مراجع مجاز می‌باشد.</li>
+          <li>در صورت عدم همکاری متقاضی در ارائه مدارک تکمیلی، پرونده بدون پرداخت وجهی قابل مختومه شدن است.</li>
+          <li>قیمت نهایی کالا در زمان ثبت قرارداد نهایی محاسبه می‌شود و ممکن است با قیمت روز ثبت فرم متفاوت باشد.</li>
+          <li>روند بررسی اعتباری و اعلام نتیجه نهایی بر عهده واحد اعتباری میم‌استور است.</li>
+        </ol>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="agreeFee">
+          <label for="agreeFee">
+            متعهد می‌شوم مبلغ ۲۵۰,۰۰۰ تومان بابت هزینه خدمات بررسی و تشکیل پرونده پرداخت نمایم و می‌دانم این مبلغ در هیچ شرایطی قابل استرداد نیست.
+          </label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="agreeTruth">
+          <label for="agreeTruth">
+            کلیه اطلاعات و مدارک ارائه‌شده صحیح بوده و اجازه استعلام لازم از مراجع مجاز را به واحد اعتباری میم‌استور می‌دهم.
+          </label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="agreeCheck">
+          <label for="agreeCheck">
+            با مطالعه کامل توضیحات فوق، شرایط واحد اعتباری میم‌استور را می‌پذیرم و می‌دانم این فرم صرفاً جهت بررسی اولیه است.
+          </label>
+        </div>
+      </div>
+
+      <button type="submit">ارسال و ثبت در واتساپ میم‌استور</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("creditForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const fullname       = document.getElementById("fullname");
+      const fathername     = document.getElementById("fathername");
+      const nationalId     = document.getElementById("nationalId");
+      const idNumber       = document.getElementById("idNumber");
+      const birthDate      = document.getElementById("birthDate");
+      const issuedFrom     = document.getElementById("issuedFrom");
+      const postalCode     = document.getElementById("postalCode");
+      const phone          = document.getElementById("phone");
+      const education      = document.getElementById("education");
+      const jobTitle       = document.getElementById("jobTitle");
+      const experienceYears= document.getElementById("experienceYears");
+      const homeAddress    = document.getElementById("homeAddress");
+      const creditExact    = document.getElementById("creditExact");
+      const product        = document.getElementById("product");
+      const extraNote      = document.getElementById("extraNote");
+      const idCardFile     = document.getElementById("idCardFile");
+      const agreeFee       = document.getElementById("agreeFee");
+      const agreeTruth     = document.getElementById("agreeTruth");
+      const agreeCheck     = document.getElementById("agreeCheck");
+      const creditLimitEl  = document.querySelector("input[name='creditLimit']:checked");
+
+      let errors = [];
+
+      if (!fullname.value.trim())      errors.push("نام و نام خانوادگی را وارد کنید.");
+      if (!nationalId.value.trim())    errors.push("کد ملی را وارد کنید.");
+      if (!phone.value.trim())         errors.push("شماره موبایل را وارد کنید.");
+      if (!homeAddress.value.trim())   errors.push("آدرس محل سکونت را وارد کنید.");
+      if (!creditLimitEl)              errors.push("سقف اعتبار درخواستی را انتخاب کنید.");
+
+      if (!agreeFee.checked || !agreeTruth.checked || !agreeCheck.checked) {
+        errors.push("برای ادامه، سه مورد تأیید شرایط را تیک بزنید.");
+      }
+
+      if (errors.length > 0) {
+        alert(errors.join("\n"));
+        return;
+      }
+
+      const creditLimitVal = creditLimitEl.value === "50" ? "۵۰ میلیون تومان" : "۱۰۰ میلیون تومان (فقط آیفون 16 و 17)";
+
+      let msg  = "درخواست اعتبار اقساطی - موبایل میم‌استور\n";
+      msg += "-----------------------------\n";
+      msg += "نام و نام خانوادگی: " + fullname.value + "\n";
+      msg += "نام پدر: " + (fathername.value || "-") + "\n";
+      msg += "کد ملی: " + nationalId.value + "\n";
+      msg += "شماره شناسنامه: " + (idNumber.value || "-") + "\n";
+      msg += "تاریخ تولد: " + (birthDate.value || "-") + "\n";
+      msg += "صادره از: " + (issuedFrom.value || "-") + "\n";
+      msg += "کد پستی: " + (postalCode.value || "-") + "\n";
+      msg += "موبایل: " + phone.value + "\n";
+      msg += "مدرک تحصیلی: " + (education.value || "-") + "\n";
+      msg += "شغل: " + (jobTitle.value || "-") + "\n";
+      msg += "سابقه کار: " + (experienceYears.value || "-") + "\n";
+      msg += "آدرس: " + homeAddress.value + "\n\n";
+
+      msg += "سقف اعتبار انتخاب‌شده: " + creditLimitVal + "\n";
+      msg += "اعتبار مورد نیاز (در صورت کمتر بودن): " + (creditExact.value || "-") + "\n";
+      msg += "مدل کالا / توضیحات خرید: " + (product.value || "-") + "\n";
+      msg += "توضیحات تکمیلی: " + (extraNote.value || "-") + "\n\n";
+
+      if (idCardFile && idCardFile.files && idCardFile.files.length > 0) {
+        msg += "فایل کارت ملی انتخاب‌شده: " + idCardFile.files[0].name + "\n\n";
+      } else {
+        msg += "فایل کارت ملی: بعداً در واتساپ ارسال می‌شود\n\n";
+      }
+
+      msg += "تأییدها:\n";
+      msg += "- پذیرش هزینه ۲۵۰,۰۰۰ تومان بابت خدمات بررسی و تشکیل پرونده (غیرقابل استرداد).\n";
+      msg += "- صحت اطلاعات و اجازه استعلام از مراجع مجاز.\n";
+      msg += "- پذیرش کامل شرایط واحد اعتباری میم‌استور.\n";
+
+      const url = "https://wa.me/989999926021?text=" + encodeURIComponent(msg);
+      window.location.href = url;
+    });
+  </script>
+</body>
+</html>
