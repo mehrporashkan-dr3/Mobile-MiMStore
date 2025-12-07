@@ -249,10 +249,8 @@
     </form>
   </div>
 
-  <!-- html2canvas برای ساخت JPG -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-          integrity="sha512-BNa5lK2nq2PpPAmhpN6wX+edE2l50Tzw9uQWGWpZJYG1ChcxrFAuo0xO+ogzAm8h1Hn0pVITwW2N9Q4vNKOu0w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- html2canvas برای ساخت JPG – نسخه بدون integrity -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
     // ارسال به واتساپ
@@ -260,30 +258,30 @@
       e.preventDefault();
 
       const data = new FormData(this);
-      let msg = 'درخواست خرید اقساطی میم‌استور\\n\\n';
+      let msg = 'درخواست خرید اقساطی میم‌استور\n\n';
 
-      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\\n';
-      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\\n';
-      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\\n';
-      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\\n';
-      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\\n';
-      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\\n';
-      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\\n';
-      msg += 'تحصیلات: ' + (data.get('education') || '') + '\\n';
-      msg += 'موبایل: ' + (data.get('mobile') || '') + '\\n\\n';
+      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\n';
+      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\n';
+      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\n';
+      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\n';
+      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\n';
+      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\n';
+      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\n';
+      msg += 'تحصیلات: ' + (data.get('education') || '') + '\n';
+      msg += 'موبایل: ' + (data.get('mobile') || '') + '\n\n';
 
-      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\\n';
-      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\\n\\n';
+      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\n';
+      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\n\n';
 
-      msg += 'شغل: ' + (data.get('job_title') || '') + '\\n';
-      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\\n\\n';
+      msg += 'شغل: ' + (data.get('job_title') || '') + '\n';
+      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\n\n';
 
-      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\\n';
-      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\\n';
-      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\\n';
-      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\\n\\n';
+      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\n';
+      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\n';
+      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\n';
+      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\n\n';
 
-      msg += '✅ کاربر شرایط و هزینه‌ها را پذیرفته است.\\n';
+      msg += '✅ کاربر شرایط و هزینه‌ها را پذیرفته است.\n';
       msg += 'یادآوری: لطفاً تصویر روی کارت ملی نیز در همین واتساپ ارسال شود.';
 
       // شماره واتساپ میم‌استور: 09999926021  →  بدون صفر + کد کشور
@@ -307,6 +305,11 @@
     // دکمه دانلود JPG (کیفیت بالا)
     document.getElementById('download-jpg').addEventListener('click', function () {
       const form = document.getElementById('mimstore-credit-form');
+
+      if (typeof html2canvas === 'undefined') {
+        alert('مشکلی در بارگذاری کتابخانه ساخت تصویر پیش آمده. لطفاً یک‌بار صفحه را رفرش کنید.');
+        return;
+      }
 
       html2canvas(form, {
         scale: 3,           // کیفیت بالاتر
