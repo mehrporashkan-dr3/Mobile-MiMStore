@@ -60,9 +60,7 @@
       outline: none;
     }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: #c00;
       box-shadow: 0 0 0 2px rgba(204,0,0,0.12);
     }
@@ -87,7 +85,9 @@
       line-height: 1.8;
     }
 
-    .checkbox-row input { margin-left: .4rem; }
+    .checkbox-row input {
+      margin-left: .4rem;
+    }
 
     /* امضاء الکترونیک */
     #signature-pad {
@@ -123,8 +123,7 @@
       margin-top: 1rem;
     }
 
-    .btn-main,
-    .btn-secondary {
+    .btn-main, .btn-secondary {
       width: 100%;
       padding: .75rem;
       border-radius: 8px;
@@ -153,7 +152,6 @@
       color: #555;
       text-align: justify;
     }
-
   </style>
 </head>
 
@@ -165,7 +163,7 @@
 
   <p style="text-align:justify;">
     لطفاً این فرم تنها توسط متقاضی اصلی تکمیل شود.  
-    کلیه مدارک و چک باید به نام صاحب حساب و دسته‌چک باشد.
+    کلیه مدارک و چک باید به نام صاحب حساب باشد.
   </p>
 
   <!-- اطلاعات هویتی -->
@@ -237,7 +235,7 @@
 
   <label class="checkbox-row">
     <input type="radio" name="credit_cap" value="۱۰۰ میلیون تومان (ویژه آیفون)">
-    ۱۰۰ میلیون تومان (ویژه آیفون ۱۶ و ۱۷)
+    ۱۰۰ میلیون تومان (آیفون ۱۶ و ۱۷)
   </label>
 
   <label>اعتبار مورد نیاز</label>
@@ -260,26 +258,29 @@
   <div id="confirm-section">
 
     <div class="terms-box">
-      1. این فرم برای بررسی اولیه است و قرارداد نهایی نیست.<br><br>
-      2. سقف اعتبار: ۵۰ و ۱۰۰ میلیون تومان.<br><br>
-      3. مبلغ ۲۵۰٬۰۰۰ تومان برای تشکیل پرونده دریافت می‌شود و غیرقابل استرداد است.<br><br>
-      4. نرخ خدمات مالی ۱.۹٪ ماهیانه است.<br><br>
-      5. مبلغ ۱۱.۵٪ هزینه خدمات تسهیلاتی پس از تأیید اعتبار دریافت می‌شود.<br><br>
-      6. ارائه یک برگ چک صیادی بنفش الزامی است.<br><br>
-      7. زمان ارسال و بررسی چک ۳ تا ۵ روز کاری است.<br><br>
-      8. قیمت کالا بر اساس نرخ روز زمان قرارداد محاسبه می‌شود.
+      1. این فرم برای بررسی اولیه بوده و قرارداد نهایی نیست.<br><br>
+      2. سقف اعتبار: ۵۰ یا ۱۰۰ میلیون تومان (برای برخی مدل‌ها).<br><br>
+      3. مبلغ ۲۵۰٬۰۰۰ تومان بابت تشکیل پرونده دریافت می‌شود و **غیرقابل استرداد** است.<br><br>
+      4. نرخ خدمات مالی: **۱.۹٪ ماهیانه**.<br><br>
+      5. هزینه خدمات تسهیلاتی: **۱۱.۵٪ از کل اعتبار** و از اصل اعتبار کسر نمی‌شود.<br><br>
+      6. ارائه یک برگ **چک صیادی بنفش** الزامی است (بررسی تصویر، سپس ارسال اصل).<br><br>
+      7. زمان دریافت چک توسط شرکت: **۳ تا ۵ روز کاری**.<br><br>
+      8. قیمت کالا بر اساس **نرخ روز زمان قرارداد** محاسبه می‌شود.
     </div>
 
     <label class="checkbox-row">
-      <input type="checkbox" id="agree_fee" required> مبلغ ۲۵۰٬۰۰۰ تومان را می‌پذیرم.
+      <input type="checkbox" id="agree_fee" required>
+      مبلغ ۲۵۰٬۰۰۰ تومان را می‌پذیرم.
     </label>
 
     <label class="checkbox-row">
-      <input type="checkbox" id="agree_info" required> اطلاعات وارد شده صحیح است.
+      <input type="checkbox" id="agree_info" required>
+      اطلاعات وارد شده صحیح است.
     </label>
 
     <label class="checkbox-row">
-      <input type="checkbox" id="agree_terms" required> تمام شرایط فوق را قبول دارم.
+      <input type="checkbox" id="agree_terms" required>
+      تمام شرایط فوق را قبول دارم.
     </label>
 
     <!-- امضاء -->
@@ -291,7 +292,7 @@
       <button type="button" class="clear-btn" id="clear-signature">پاک کردن امضاء</button>
     </div>
 
-    <p style="margin-top:.5rem; font-size:.9rem;">
+    <p style="margin-top:.5rem; font-size:.95rem;">
       اینجانب <strong id="sig-name-preview">........................</strong> شرایط فوق را می‌پذیرم.
     </p>
 
@@ -304,7 +305,7 @@
   </div>
 
   <p class="hint-text">
-    برای تکمیل ثبت‌نام، ارسال تصویر شرایط + امضاء الزامی است.
+    ارسال تصویر شرایط + امضاء برای ادامه کار الزامی است.
   </p>
 
 </form>
