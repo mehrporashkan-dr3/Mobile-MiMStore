@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>فرم درخواست خرید اقساطی – میم استور</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -12,7 +11,6 @@
       margin: 0;
       padding: 1rem;
     }
-
     .container {
       max-width: 720px;
       margin: 0 auto;
@@ -21,31 +19,26 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-
     h2 {
       text-align: center;
       margin-top: 0;
       margin-bottom: .75rem;
       font-size: 1.1rem;
     }
-
     h3 {
       margin-top: 1.75rem;
       border-right: 3px solid #c00;
       padding-right: .5rem;
       font-size: 1rem;
     }
-
     p, label {
       font-size: .9rem;
     }
-
     input, select, textarea, button {
       font-family: inherit;
       font-size: .9rem;
       line-height: 1.4;
     }
-
     input[type="text"],
     input[type="tel"],
     input[type="number"],
@@ -59,14 +52,16 @@
       border: 1px solid #ccc;
       outline: none;
     }
-
-    input:focus, textarea:focus, select:focus {
+    input:focus,
+    textarea:focus,
+    select:focus {
       border-color: #c00;
       box-shadow: 0 0 0 2px rgba(204,0,0,0.12);
     }
-
-    textarea { min-height: 70px; }
-
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
     .terms-box {
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -77,53 +72,63 @@
       text-align: justify;
       background: #fafafa;
     }
-
     .checkbox-row {
       display: block;
       margin-bottom: .5rem;
       font-size: .85rem;
-      line-height: 1.8;
+      line-height: 1.7;
     }
-
     .checkbox-row input {
       margin-left: .4rem;
     }
 
-    /* امضاء الکترونیک */
-    #signature-pad {
-      border: 1px solid #555;
+    /* امضاء */
+    .signature-panel {
+      border: 1px dashed #bdbdbd;
       border-radius: 8px;
-      width: 100%;
-      height: 180px;
+      padding: .75rem;
+      margin-top: .75rem;
       background: #fff;
-      margin-top: .7rem;
+      font-size: .85rem;
+      line-height: 1.8;
+    }
+    .signature-canvas {
+      width: 100%;
+      height: 160px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      background: #fff;
       touch-action: none;
     }
-
     .signature-actions {
-      margin-top: .4rem;
-      display: flex;
-      justify-content: flex-end;
+      margin-top: .35rem;
+      text-align: left;
+      font-size: .8rem;
     }
-
-    .clear-btn {
-      background: #c62828;
-      color: #fff;
-      padding: .4rem .9rem;
-      border: none;
+    .signature-actions button {
+      padding: .3rem .7rem;
       border-radius: 6px;
-      font-size: .85rem;
+      border: none;
+      background: #f44336;
+      color: #fff;
       cursor: pointer;
+    }
+    .signature-actions button:hover {
+      background: #d32f2f;
+    }
+    .signature-name-line {
+      margin-top: .6rem;
+      font-size: .85rem;
     }
 
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: .6rem;
+      gap: .5rem;
       margin-top: 1rem;
     }
-
-    .btn-main, .btn-secondary {
+    .btn-main,
+    .btn-secondary {
       width: 100%;
       padding: .75rem;
       border-radius: 8px;
@@ -131,20 +136,20 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
     .btn-main {
-      background: #1ba64a;
+      background: #d32f2f;
       color: #fff;
     }
-
-    .btn-main:hover { background: #14823a; }
-
+    .btn-main:hover {
+      background: #b71c1c;
+    }
     .btn-secondary {
       background: #333;
       color: #fff;
     }
-
-    .btn-secondary:hover { background: #111; }
+    .btn-secondary:hover {
+      background: #111;
+    }
 
     .hint-text {
       margin-top: .6rem;
@@ -154,298 +159,343 @@
     }
   </style>
 </head>
-
 <body>
-<div class="container">
-<form id="mimstore-credit-form">
+  <div class="container">
+    <form id="mimstore-credit-form">
+      <h2>فرم درخواست خرید اقساطی – میم استور</h2>
 
-  <h2>فرم درخواست خرید اقساطی – میم استور</h2>
+      <p style="text-align:justify; line-height:1.7;">
+        لطفاً این فرم را تنها توسط متقاضی اصلی خرید اقساطی تکمیل کنید. تمامی اطلاعات، از جمله چک و مدارک اعتباری،
+        باید به نام همان متقاضی (دارنده دسته‌چک) باشد. در صورت مغایرت، بررسی درخواست انجام نخواهد شد.
+      </p>
 
-  <p style="text-align:justify;">
-    لطفاً این فرم تنها توسط متقاضی اصلی تکمیل شود.  
-    کلیه مدارک و چک باید به نام صاحب حساب باشد.
-  </p>
+      <!-- ۱. اطلاعات هویتی متقاضی -->
+      <h3>۱. اطلاعات هویتی متقاضی</h3>
 
-  <!-- اطلاعات هویتی -->
-  <h3>۱. اطلاعات هویتی</h3>
+      <label>نام و نام خانوادگی</label>
+      <input type="text" name="full_name" id="full-name" required placeholder="مثال: علی رضایی">
 
-  <label>نام و نام خانوادگی</label>
-  <input type="text" name="full_name" id="full-name" required>
+      <label>نام پدر</label>
+      <input type="text" name="father_name" required placeholder="مثال: حسن">
 
-  <label>نام پدر</label>
-  <input type="text" name="father_name" required>
+      <label>کد ملی</label>
+      <input type="text" name="national_id" required minlength="10" maxlength="10" placeholder="۱۰ رقم">
 
-  <label>کد ملی</label>
-  <input type="text" name="national_id" minlength="10" maxlength="10" required>
+      <label>شماره شناسنامه</label>
+      <input type="text" name="id_number" required>
 
-  <label>شماره شناسنامه</label>
-  <input type="text" name="id_number" required>
+      <label>محل صدور شناسنامه</label>
+      <input type="text" name="id_place" required placeholder="مثال: تهران">
 
-  <label>محل صدور</label>
-  <input type="text" name="id_place" required>
+      <label>تاریخ تولد (شمسی)</label>
+      <input type="text" name="birth_date" required placeholder="مثال: 1378/05/21">
 
-  <label>تاریخ تولد</label>
-  <input type="text" name="birth_date" required placeholder="مثال: 1378/05/21">
+      <label>وضعیت تأهل</label>
+      <select name="marital_status" required>
+        <option value="">انتخاب کنید</option>
+        <option value="مجرد">مجرد</option>
+        <option value="متأهل">متأهل</option>
+      </select>
 
-  <label>وضعیت تأهل</label>
-  <select name="marital_status" required>
-    <option value="">انتخاب کنید</option>
-    <option value="مجرد">مجرد</option>
-    <option value="متأهل">متأهل</option>
-  </select>
+      <label>میزان تحصیلات</label>
+      <select name="education" required>
+        <option value="">انتخاب کنید</option>
+        <option value="دیپلم">دیپلم</option>
+        <option value="کاردانی">کاردانی</option>
+        <option value="کارشناسی">کارشناسی</option>
+        <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+        <option value="دکتری">دکتری</option>
+      </select>
 
-  <label>تحصیلات</label>
-  <select name="education" required>
-    <option value="">انتخاب کنید</option>
-    <option value="دیپلم">دیپلم</option>
-    <option value="کاردانی">کاردانی</option>
-    <option value="کارشناسی">کارشناسی</option>
-    <option value="کارشناسی ارشد">کارشناسی ارشد</option>
-    <option value="دکتری">دکتری</option>
-  </select>
+      <label>شماره موبایل به نام خودتان</label>
+      <input type="tel" name="mobile" required placeholder="مثال: 09XXXXXXXXX">
 
-  <label>شماره موبایل (به نام خودتان)</label>
-  <input type="tel" name="mobile" required>
+      <!-- ۲. اطلاعات محل سکونت -->
+      <h3>۲. اطلاعات محل سکونت</h3>
 
-  <!-- نشانی -->
-  <h3>۲. اطلاعات سکونت</h3>
+      <label>نشانی کامل محل سکونت</label>
+      <textarea name="address" required placeholder="شهر، خیابان، کوچه، پلاک، واحد"></textarea>
 
-  <label>نشانی کامل</label>
-  <textarea name="address" required></textarea>
+      <label>کد پستی</label>
+      <input type="text" name="postal_code" required minlength="10" maxlength="10">
 
-  <label>کد پستی</label>
-  <input type="text" name="postal_code" minlength="10" maxlength="10" required>
+      <!-- ۳. اطلاعات شغلی -->
+      <h3>۳. اطلاعات شغلی</h3>
 
-  <!-- شغلی -->
-  <h3>۳. اطلاعات شغلی</h3>
+      <label>شغل / عنوان شغلی</label>
+      <input type="text" name="job_title" required placeholder="مثال: فروشنده موبایل">
 
-  <label>شغل / عنوان</label>
-  <input type="text" name="job_title" required>
+      <label>سابقه کار (چند سال)</label>
+      <input type="number" name="job_years" min="0" required placeholder="مثال: ۳">
 
-  <label>سابقه کار (سال)</label>
-  <input type="number" name="job_years" min="0" required>
+      <!-- ۴. اطلاعات اعتبار درخواستی -->
+      <h3>۴. اطلاعات اعتبار درخواستی</h3>
 
-  <!-- اعتبار -->
-  <h3>۴. اعتبار درخواستی</h3>
+      <p style="margin-bottom:.4rem;">سقف اعتبار درخواستی</p>
+      <label class="checkbox-row">
+        <input type="radio" name="credit_cap" value="۵۰ میلیون تومان" required>
+        ۵۰ میلیون تومان
+      </label>
+      <label class="checkbox-row" style="margin-bottom:.6rem;">
+        <input type="radio" name="credit_cap" value="۱۰۰ میلیون تومان (آیفون ۱۶ و ۱۷)">
+        ۱۰۰ میلیون تومان (فقط برای خرید آیفون ۱۶ و ۱۷)
+      </label>
 
-  <label class="checkbox-row">
-    <input type="radio" name="credit_cap" value="۵۰ میلیون تومان" required>
-    ۵۰ میلیون تومان
-  </label>
+      <label>اعتبار مورد نیاز (در صورت کمتر بودن)</label>
+      <input type="text" id="credit-needed" name="credit_needed" placeholder="مثال: 30,000,000">
 
-  <label class="checkbox-row">
-    <input type="radio" name="credit_cap" value="۱۰۰ میلیون تومان (ویژه آیفون)">
-    ۱۰۰ میلیون تومان (آیفون ۱۶ و ۱۷)
-  </label>
+      <label>مدل کالا / توضیحات خرید</label>
+      <input type="text" name="product_model" placeholder="مثال: iPhone 13 ، Samsung S24">
 
-  <label>اعتبار مورد نیاز</label>
-  <input type="text" id="credit-needed" name="credit_needed">
+      <label>توضیحات تکمیلی (اختیاری)</label>
+      <textarea name="extra_note" placeholder="هر توضیحی لازم است بنویسید"></textarea>
 
-  <label>مدل کالا</label>
-  <input type="text" name="product_model">
+      <!-- ۵. مدارک -->
+      <h3>۵. مدارک</h3>
 
-  <label>توضیحات</label>
-  <textarea name="extra_note"></textarea>
+      <p style="font-size:.9rem; line-height:1.7; text-align:justify;">
+        پس از ارسال این فرم، <strong>ارسال تصویر واضح روی کارت ملی از طریق واتساپ به شماره میم‌استور الزامی است.</strong><br>
+        بدون دریافت تصویر کارت ملی، امکان ادامه روند اعتبارسنجی وجود نخواهد داشت.
+      </p>
 
-  <h3>۵. مدارک</h3>
-  <p style="font-size:.9rem;">
-    ارسال تصویر کارت ملی پس از ارسال فرم الزامی است.
-  </p>
+      <!-- ۶. شرایط + تیک‌ها + امضاء (بخشی که PNG می‌شود) -->
+      <h3>۶. شرایط و مقررات و تأیید متقاضی</h3>
 
-  <!-- شرایط + امضاء -->
-  <h3>۶. شرایط، مقررات و امضاء</h3>
+      <div id="confirm-section">
+        <div class="terms-box">
+          1. این فرم صرفاً جهت <strong>بررسی اولیه اعتبار</strong> می‌باشد و به‌تنهایی به‌منزله عقد قرارداد قطعی نیست.<br><br>
+          2. سقف اعتبار قابل ارائه <strong>۵۰ میلیون تومان</strong> و <strong>۱۰۰ میلیون تومان</strong> است. سقف ۱۰۰ میلیون تومان ویژه برخی مدل‌های منتخب (از جمله آیفون ۱۶ و ۱۷) می‌باشد.<br><br>
+          3. مبلغ <strong>۲۵۰٬۰۰۰ تومان</strong> بابت هزینه خدمات ثبت‌نام، استعلام اعتباری و تشکیل پرونده دریافت می‌شود. با توجه به انجام فرآیندهای اداری، این مبلغ
+          <strong>در هیچ شرایطی (از جمله رد اعتبار یا انصراف متقاضی) قابل استرداد نمی‌باشد.</strong><br><br>
+          4. <strong>نرخ خدمات مالی (سود ماهیانه) ۱.۹٪</strong> بوده و مبلغ اقساط بر این اساس محاسبه می‌گردد.<br><br>
+          5. پس از تأیید اعتبار، مبلغ <strong>۱۱.۵٪ از کل اعتبار درخواستی</strong> تحت عنوان <strong>هزینه خدمات تسهیلاتی و مالی</strong> دریافت می‌شود. این مبلغ از اصل اعتبار کسر نمی‌گردد و پرداخت آن شرط ادامه روند قرارداد است.<br><br>
+          6. برای عقد قرارداد، ارائه <strong>یک برگ چک صیادی بنفش به نام متقاضی</strong> الزامی است. ابتدا تصویر چک بررسی می‌شود و سپس اصل چک باید از طریق پست برای شرکت ارسال گردد.<br><br>
+          7. مدت زمان تقریبی دریافت اصل چک توسط شرکت <strong>۳ تا ۵ روز کاری</strong> است. فعال‌سازی اعتبار پس از تحویل فیزیکی چک انجام می‌شود و در صورت وصول زودتر، مراحل سریع‌تر تکمیل می‌گردد.<br><br>
+          8. <strong>نظر به نوسانات قیمت کالا، مبلغ نهایی خرید منوط به زمان تکمیل مراحل و ثبت قرارداد بوده و بر اساس نرخ روز محاسبه می‌گردد.</strong>
+        </div>
 
-  <div id="confirm-section">
+        <label class="checkbox-row">
+          <input type="checkbox" name="agree_fee" id="agree_fee" required>
+          متعهد می‌شوم مبلغ <strong>۲۵۰٬۰۰۰ تومان</strong> بابت استعلام و تشکیل پرونده را پرداخت نمایم و آگاه هستم که این مبلغ در هیچ شرایطی قابل استرداد نیست.
+        </label>
 
-    <div class="terms-box">
-      1. این فرم برای بررسی اولیه بوده و قرارداد نهایی نیست.<br><br>
-      2. سقف اعتبار: ۵۰ یا ۱۰۰ میلیون تومان (برای برخی مدل‌ها).<br><br>
-      3. مبلغ ۲۵۰٬۰۰۰ تومان بابت تشکیل پرونده دریافت می‌شود و **غیرقابل استرداد** است.<br><br>
-      4. نرخ خدمات مالی: **۱.۹٪ ماهیانه**.<br><br>
-      5. هزینه خدمات تسهیلاتی: **۱۱.۵٪ از کل اعتبار** و از اصل اعتبار کسر نمی‌شود.<br><br>
-      6. ارائه یک برگ **چک صیادی بنفش** الزامی است (بررسی تصویر، سپس ارسال اصل).<br><br>
-      7. زمان دریافت چک توسط شرکت: **۳ تا ۵ روز کاری**.<br><br>
-      8. قیمت کالا بر اساس **نرخ روز زمان قرارداد** محاسبه می‌شود.
-    </div>
+        <label class="checkbox-row">
+          <input type="checkbox" name="agree_info" id="agree_info" required>
+          تأیید می‌کنم کلیه اطلاعات و مدارک ارائه‌شده صحیح و واقعی است و به واحد اعتباری میم‌استور اجازه استعلام لازم از مراجع مجاز را می‌دهم.
+        </label>
 
-    <label class="checkbox-row">
-      <input type="checkbox" id="agree_fee" required>
-      مبلغ ۲۵۰٬۰۰۰ تومان را می‌پذیرم.
-    </label>
+        <label class="checkbox-row">
+          <input type="checkbox" name="agree_terms" id="agree_terms" required>
+          با مطالعه کامل شرایط فوق، نرخ خدمات مالی <strong>۱.۹٪</strong> و هزینه خدمات تسهیلاتی <strong>۱۱.۵٪</strong> را می‌پذیرم و می‌دانم ارسال این فرم صرفاً جهت بررسی اولیه می‌باشد.
+        </label>
 
-    <label class="checkbox-row">
-      <input type="checkbox" id="agree_info" required>
-      اطلاعات وارد شده صحیح است.
-    </label>
+        <div class="signature-panel">
+          <p style="margin-bottom:.4rem;">
+            لطفاً امضاء الکترونیک خود را در کادر زیر وارد کنید. این امضاء به‌همراه شرایط و تیک‌ها در یک تصویر ذخیره می‌شود.
+          </p>
 
-    <label class="checkbox-row">
-      <input type="checkbox" id="agree_terms" required>
-      تمام شرایط فوق را قبول دارم.
-    </label>
+          <canvas id="signature-pad" class="signature-canvas"></canvas>
 
-    <!-- امضاء -->
-    <p style="margin-top:1rem;">امضاء الکترونیک (با انگشت):</p>
+          <div class="signature-actions">
+            <button type="button" id="clear-signature">پاک کردن امضاء</button>
+          </div>
 
-    <canvas id="signature-pad"></canvas>
+          <p class="signature-name-line">
+            نام و نام خانوادگی متقاضی:
+            <strong><span id="sig-name-preview">........................</span></strong>
+          </p>
+        </div>
+      </div>
 
-    <div class="signature-actions">
-      <button type="button" class="clear-btn" id="clear-signature">پاک کردن امضاء</button>
-    </div>
+      <!-- دکمه‌ها -->
+      <div class="buttons">
+        <button type="submit" class="btn-main">ارسال و ثبت در واتساپ میم‌استور</button>
+        <button type="button" id="download-terms-png" class="btn-secondary">
+          دانلود تصویر شرایط و امضاء (PNG)
+        </button>
+      </div>
 
-    <p style="margin-top:.5rem; font-size:.95rem;">
-      اینجانب <strong id="sig-name-preview">........................</strong> شرایط فوق را می‌پذیرم.
-    </p>
-
+      <p class="hint-text">
+        برای تکمیل ثبت‌نام، پس از ارسال واتساپ، <strong>دانلود و ارسال تصویر شرایط و امضاء</strong> به‌صورت
+        فایل (Document) در واتساپ الزامی است.
+      </p>
+    </form>
   </div>
 
-  <!-- دکمه‌ها -->
-  <div class="buttons">
-    <button type="submit" class="btn-main">ارسال واتساپ</button>
-    <button type="button" id="download-terms-png" class="btn-secondary">دانلود تصویر شرایط و امضاء (PNG)</button>
-  </div>
+  <!-- html2canvas برای ساخت PNG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+          integrity="sha512-BNa5lK2nq2PpPAmhpN6wX+edE2l50Tzw9uQWGWpZJYG1ChcxrFAuo0xO+ogzAm8h1Hn0pVITwW2N9Q4vNKOu0w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <p class="hint-text">
-    ارسال تصویر شرایط + امضاء برای ادامه کار الزامی است.
-  </p>
+  <script>
+    // --- سینک نام اصلی با خط امضاء ---
+    const fullNameInput = document.getElementById('full-name');
+    const sigNamePreview = document.getElementById('sig-name-preview');
 
-</form>
-</div>
+    fullNameInput.addEventListener('input', function () {
+      const v = this.value.trim();
+      sigNamePreview.textContent = v || '........................';
+    });
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    // --- فرمت سه‌رقمی برای اعتبار موردنیاز ---
+    const creditInput = document.getElementById('credit-needed');
+    creditInput.addEventListener('input', function () {
+      let val = this.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+      if (!val) {
+        this.value = '';
+        return;
+      }
+      this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
 
-<script>
-/* -----------------------
-   امضاء الکترونیک Canvas
------------------------- */
-const canvas = document.getElementById("signature-pad");
-const ctx = canvas.getContext("2d");
+    // --- امضاء الکترونیک (canvas) ---
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let signatureDrawn = false;
 
-function resizeCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
-  ctx.scale(ratio, ratio);
-  ctx.lineWidth = 2;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = "#000";
-}
-resizeCanvas();
+    function resizeCanvas() {
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      signatureDrawn = false;
+    }
 
-let drawing = false;
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (e.touches && e.touches[0]) {
+        return {
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top
+        };
+      }
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
 
-canvas.addEventListener("pointerdown", e => {
-  drawing = true;
-  ctx.beginPath();
-  ctx.moveTo(e.offsetX, e.offsetY);
-});
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
 
-canvas.addEventListener("pointermove", e => {
-  if (!drawing) return;
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.stroke();
-});
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      signatureDrawn = true;
+    }
 
-canvas.addEventListener("pointerup", () => drawing = false);
-canvas.addEventListener("pointerleave", () => drawing = false);
+    function endDraw(e) {
+      if (!drawing) return;
+      e && e.preventDefault();
+      drawing = false;
+    }
 
-document.getElementById("clear-signature").onclick = () =>
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
 
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', endDraw, { passive: false });
 
-/* -----------------------
-   اسم → خودکار داخل امضا
------------------------- */
-const fullName = document.getElementById("full-name");
-const sigPreview = document.getElementById("sig-name-preview");
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-fullName.addEventListener("input", () => {
-  sigPreview.textContent = fullName.value || "........................";
-});
+    document.getElementById('clear-signature').addEventListener('click', function (e) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      signatureDrawn = false;
+    });
 
+    // --- ارسال به واتساپ ---
+    document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-/* -----------------------
-   دانلود PNG از شرایط+امضا
------------------------- */
-document.getElementById("download-terms-png").onclick = () => {
+      const data = new FormData(this);
+      let msg = 'درخواست خرید اقساطی میم‌استور\n\n';
 
-  if (!agree_fee.checked || !agree_info.checked || !agree_terms.checked) {
-    alert("لطفاً همه تیک‌ها را بزنید.");
-    return;
-  }
+      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\n';
+      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\n';
+      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\n';
+      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\n';
+      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\n';
+      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\n';
+      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\n';
+      msg += 'تحصیلات: ' + (data.get('education') || '') + '\n';
+      msg += 'موبایل: ' + (data.get('mobile') || '') + '\n\n';
 
-  // چک امضاء
-  const blank = document.createElement("canvas");
-  blank.width = canvas.width;
-  blank.height = canvas.height;
-  if (canvas.toDataURL() === blank.toDataURL()) {
-    alert("لطفاً امضاء کنید.");
-    return;
-  }
+      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\n';
+      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\n\n';
 
-  html2canvas(document.getElementById("confirm-section"), {
-    scale: 3,
-    backgroundColor: "#ffffff"
-  }).then(img => {
-    const link = document.createElement("a");
-    link.href = img.toDataURL("image/png");
-    link.download = "mimstore-terms-signature.png";
-    link.click();
-  });
-};
+      msg += 'شغل: ' + (data.get('job_title') || '') + '\n';
+      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\n\n';
 
+      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\n';
+      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\n';
+      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\n';
+      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\n\n';
 
-/* -----------------------
-   فرم واتساپ
------------------------- */
-document.getElementById("mimstore-credit-form").addEventListener("submit", e => {
-  e.preventDefault();
+      msg += '✅ کاربر سه بند زیر را پذیرفته است:\n';
+      msg += '- پرداخت هزینه استعلام و تشکیل پرونده ۲۵۰٬۰۰۰ تومان\n';
+      msg += '- صحت اطلاعات و اجازه استعلام از مراجع مجاز\n';
+      msg += '- پذیرش نرخ خدمات مالی ۱.۹٪ و هزینه خدمات تسهیلاتی ۱۱.۵٪\n\n';
 
-  const data = new FormData(e.target);
+      msg += 'نام روی امضاء الکترونیک: ' + (data.get('full_name') || '') + '\n';
+      msg += 'وضعیت امضاء در فرم: ' + (signatureDrawn ? 'ثبت شده ✅' : 'ثبت نشده ⚠️') + '\n\n';
 
-  let msg = "درخواست خرید اقساطی میم‌استور\n\n";
+      msg += 'یادآوری: لطفاً تصویر روی کارت ملی و تصویر شرایط + امضاء را به‌صورت Document ارسال کنید.';
 
-  msg += "نام: " + data.get("full_name") + "\n";
-  msg += "نام پدر: " + data.get("father_name") + "\n";
-  msg += "کد ملی: " + data.get("national_id") + "\n";
-  msg += "شناسنامه: " + data.get("id_number") + "\n";
-  msg += "محل صدور: " + data.get("id_place") + "\n";
-  msg += "تولد: " + data.get("birth_date") + "\n";
-  msg += "تأهل: " + data.get("marital_status") + "\n";
-  msg += "تحصیلات: " + data.get("education") + "\n";
-  msg += "موبایل: " + data.get("mobile") + "\n\n";
+      // شماره واتساپ میم‌استور: 09999926021 → بدون صفر + کد کشور
+      const shopNumber = '989999926021';
+      const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
-  msg += "آدرس: " + data.get("address") + "\n";
-  msg += "کد پستی: " + data.get("postal_code") + "\n\n";
+      window.open(waUrl, '_blank');
+    });
 
-  msg += "شغل: " + data.get("job_title") + "\n";
-  msg += "سابقه: " + data.get("job_years") + " سال\n\n";
+    // --- دکمه دانلود PNG برای شرایط + تیک‌ها + امضاء ---
+    document.getElementById('download-terms-png').addEventListener('click', function () {
+      const fee = document.getElementById('agree_fee');
+      const info = document.getElementById('agree_info');
+      const terms = document.getElementById('agree_terms');
 
-  msg += "سقف اعتبار: " + data.get("credit_cap") + "\n";
-  msg += "اعتبار مورد نیاز: " + data.get("credit_needed") + "\n";
-  msg += "مدل کالا: " + data.get("product_model") + "\n";
-  msg += "توضیحات: " + data.get("extra_note") + "\n\n";
+      if (!fee.checked || !info.checked || !terms.checked) {
+        alert('لطفاً قبل از دانلود، هر سه تیک تأیید را بزنید.');
+        return;
+      }
+      if (!signatureDrawn) {
+        alert('لطفاً امضاء خود را در کادر امضاء وارد کنید، سپس تصویر را دانلود کنید.');
+        return;
+      }
 
-  msg += "🔻 لطفاً تصویر کارت ملی و تصویر امضاء را ارسال کنید.";
+      const confirmSection = document.getElementById('confirm-section');
 
-  const shopNumber = "989999926021";
-
-  window.open(
-    "https://wa.me/" + shopNumber + "?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
-});
-
-
-/* -----------------------
-   فرمت عدد سه‌رقمی
------------------------- */
-document.getElementById("credit-needed").addEventListener("input", function () {
-  let v = this.value.replace(/[^0-9]/g, "");
-  if (!v) return (this.value = "");
-  this.value = v.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-});
-</script>
-
+      html2canvas(confirmSection, {
+        scale: 3,
+        useCORS: true,
+        scrollY: -window.scrollY
+      }).then(canvasResult => {
+        const link = document.createElement('a');
+        link.href = canvasResult.toDataURL('image/png', 1.0);
+        link.download = 'mimstore-terms-signature.png';
+        link.click();
+      });
+    });
+  </script>
 </body>
 </html>
