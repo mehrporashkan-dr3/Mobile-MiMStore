@@ -4,35 +4,54 @@
   <meta charset="UTF-8">
   <title>فرم درخواست خرید اقساطی – میم استور</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- فونت شبنم -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css">
+
   <style>
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Shabnam', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #f5f5f5;
       margin: 0;
       padding: 1rem;
     }
     .container {
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto;
       background: #fff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 1.5rem 1.75rem 2rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      border: 1px solid #e6e6e6;
     }
+
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: .75rem;
+    }
+    .logo-wrap img {
+      max-width: 140px;
+      height: auto;
+      display: inline-block;
+    }
+
     h2 {
       text-align: center;
-      margin-top: 0;
-      margin-bottom: .75rem;
-      font-size: 1.1rem;
+      margin-top: .25rem;
+      margin-bottom: .9rem;
+      font-size: 1.2rem;
+      color: #1f1f1f;
     }
     h3 {
       margin-top: 1.75rem;
-      border-right: 3px solid #c00;
-      padding-right: .5rem;
+      border-right: 4px solid #A40E1C;
+      padding-right: .6rem;
       font-size: 1rem;
+      color: #222;
     }
     p, label {
       font-size: .9rem;
+      color: #333;
     }
     input, select, textarea, button {
       font-family: inherit;
@@ -46,25 +65,27 @@
     select {
       width: 100%;
       box-sizing: border-box;
-      padding: .45rem .55rem;
-      margin-bottom: .5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      padding: .5rem .6rem;
+      margin-bottom: .55rem;
+      border-radius: 8px;
+      border: 1px solid #d1d1d1;
       outline: none;
+      background: #fcfcfc;
     }
     input:focus,
     textarea:focus,
     select:focus {
-      border-color: #c00;
-      box-shadow: 0 0 0 2px rgba(204,0,0,0.12);
+      border-color: #A40E1C;
+      box-shadow: 0 0 0 2px rgba(164,14,28,0.18);
+      background: #fff;
     }
     textarea {
       resize: vertical;
       min-height: 70px;
     }
     .terms-box {
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      border: 1px solid #d6d6d6;
+      border-radius: 10px;
       padding: 1rem;
       margin-bottom: .75rem;
       font-size: .85rem;
@@ -80,13 +101,14 @@
     }
     .checkbox-row input {
       margin-left: .4rem;
+      transform: scale(1.05);
     }
 
     /* امضاء */
     .signature-panel {
       border: 1px dashed #bdbdbd;
-      border-radius: 8px;
-      padding: .75rem;
+      border-radius: 10px;
+      padding: .8rem .9rem 1rem;
       margin-top: .75rem;
       background: #fff;
       font-size: .85rem;
@@ -94,21 +116,21 @@
     }
     .signature-canvas {
       width: 100%;
-      height: 160px;
-      border: 1px solid #bbb;
-      border-radius: 6px;
+      height: 170px;
+      border: 1px solid #b5b5b5;
+      border-radius: 8px;
       background: #fff;
       touch-action: none;
       display: block;
     }
     .signature-actions {
-      margin-top: .35rem;
+      margin-top: .4rem;
       text-align: left;
       font-size: .8rem;
     }
     .signature-actions button {
-      padding: .3rem .7rem;
-      border-radius: 6px;
+      padding: .3rem .75rem;
+      border-radius: 999px;
       border: none;
       background: #f44336;
       color: #fff;
@@ -122,8 +144,8 @@
       font-size: .85rem;
     }
     .signature-confirm {
-      margin-top: .6rem;
-      font-size: .85rem;
+      margin-top: .55rem;
+      font-size: .83rem;
       color: #2e7d32;
       display: none;
     }
@@ -131,26 +153,27 @@
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: .5rem;
-      margin-top: 1rem;
+      gap: .65rem;
+      margin-top: 1.1rem;
     }
     .btn-main {
       width: 100%;
-      padding: .75rem;
-      border-radius: 8px;
+      padding: .8rem;
+      border-radius: 999px;
       border: none;
       font-size: 1rem;
       cursor: pointer;
-      background: #d32f2f;
+      background: #25D366; /* واتساپی */
       color: #fff;
+      font-weight: 600;
     }
     .btn-main:hover {
-      background: #b71c1c;
+      background: #1EB959;
     }
 
     .hint-text {
-      margin-top: .6rem;
-      font-size: .78rem;
+      margin-top: .7rem;
+      font-size: .8rem;
       color: #555;
       text-align: justify;
     }
@@ -159,6 +182,11 @@
 <body>
   <div class="container">
     <form id="mimstore-credit-form">
+      <div class="logo-wrap">
+        <!-- این فایل لوگو باید در ریشه پروژه باشد: logo-mimstore.png -->
+        <img src="logo-mimstore.png" alt="میم استور">
+      </div>
+
       <h2>فرم درخواست خرید اقساطی – میم استور</h2>
 
       <p style="text-align:justify; line-height:1.7;">
@@ -302,9 +330,7 @@
             <input type="text" id="signature-name" name="signature_name" placeholder="عیناً مطابق شناسنامه" required>
           </div>
 
-          <p id="signature-confirm" class="signature-confirm">
-            <!-- اینجا با جاوااسکریپت پر می‌شود -->
-          </p>
+          <p id="signature-confirm" class="signature-confirm"></p>
         </div>
       </div>
 
@@ -343,7 +369,6 @@
         '';
 
       if (!nameForSig) {
-        // اگر اسمی نیست، فقط متن رو خالی ولی بعد از امضاء نمایش داده می‌شود
         sigConfirm.textContent = '';
         return;
       }
@@ -415,7 +440,6 @@
       ctx.stroke();
       signatureDrawn = true;
 
-      // وقتی امضاء انجام شد، متن تأیید را (اگر نام دارد) نشان بده
       if (!sigConfirm.textContent.trim()) {
         updateSignatureConfirmText();
       }
