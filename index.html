@@ -258,7 +258,7 @@
         بدون دریافت تصویر کارت ملی، امکان ادامه روند اعتبارسنجی وجود نخواهد داشت.
       </p>
 
-      <!-- ۶. شرایط + تیک‌ها + امضاء (بخشی که PNG می‌شود) -->
+      <!-- ۶. شرایط + تیک‌ها + امضاء -->
       <h3>۶. شرایط و مقررات و تأیید متقاضی</h3>
 
       <div id="confirm-section">
@@ -324,7 +324,6 @@
 
   <!-- html2canvas برای ساخت PNG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-          integrity="sha512-BNa5lK2nq2PpPAmhpN6wX+edE2l50Tzw9uQWGWpZJYG1ChcxrFAuo0xO+ogzAm8h1Hn0pVITwW2N9Q4vNKOu0w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
@@ -461,7 +460,6 @@
 
       msg += 'یادآوری: لطفاً تصویر روی کارت ملی و تصویر شرایط + امضاء را به‌صورت Document ارسال کنید.';
 
-      // شماره واتساپ میم‌استور: 09999926021 → بدون صفر + کد کشور
       const shopNumber = '989999926021';
       const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
@@ -485,16 +483,25 @@
 
       const confirmSection = document.getElementById('confirm-section');
 
-      html2canvas(confirmSection, {
-        scale: 3,
-        useCORS: true,
-        scrollY: -window.scrollY
-      }).then(canvasResult => {
-        const link = document.createElement('a');
-        link.href = canvasResult.toDataURL('image/png', 1.0);
-        link.download = 'mimstore-terms-signature.png';
-        link.click();
-      });
+      try {
+        html2canvas(confirmSection, {
+          scale: 3,
+          useCORS: true,
+          scrollY: -window.scrollY
+        }).then(function (canvasResult) {
+          const link = document.createElement('a');
+          link.href = canvasResult.toDataURL('image/png', 1.0);
+          link.download = 'mimstore-terms-signature.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          alert('تصویر با موفقیت ذخیره شد. در پوشه‌ی Downloads / Files گوشی‌تان آن را به‌صورت Document در واتساپ ارسال کنید.');
+        }).catch(function (err) {
+          alert('خطا در ساخت تصویر. اگر VPN بسته است یک‌بار با VPN امتحان کن یا مرورگر دیگری استفاده کن.\n\nجزئیات خطا: ' + err);
+        });
+      } catch (e) {
+        alert('html2canvas روی این مرورگر اجرا نشد. اگر می‌توانی با Chrome / مرورگر دیگر یا با VPN تست کن.');
+      }
     });
   </script>
 </body>
