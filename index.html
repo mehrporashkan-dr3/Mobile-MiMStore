@@ -121,6 +121,12 @@
       margin-top: .6rem;
       font-size: .85rem;
     }
+    .signature-confirm {
+      margin-top: .6rem;
+      font-size: .85rem;
+      color: #2e7d32;
+      display: none;
+    }
 
     .buttons {
       display: flex;
@@ -128,28 +134,18 @@
       gap: .5rem;
       margin-top: 1rem;
     }
-    .btn-main,
-    .btn-secondary {
+    .btn-main {
       width: 100%;
       padding: .75rem;
       border-radius: 8px;
       border: none;
       font-size: 1rem;
       cursor: pointer;
-    }
-    .btn-main {
       background: #d32f2f;
       color: #fff;
     }
     .btn-main:hover {
       background: #b71c1c;
-    }
-    .btn-secondary {
-      background: #333;
-      color: #fff;
-    }
-    .btn-secondary:hover {
-      background: #111;
     }
 
     .hint-text {
@@ -243,7 +239,7 @@
       </label>
 
       <label>اعتبار مورد نیاز (در صورت کمتر بودن)</label>
-      <input type="text" id="credit-needed" name="credit_needed" placeholder="مثال: 30,000,000">
+      <input type="text" id="credit-needed" name="credit_needed" placeholder="مثال: 50,000,000">
 
       <label>مدل کالا / توضیحات خرید</label>
       <input type="text" name="product_model" placeholder="مثال: iPhone 13 ، Samsung S24">
@@ -292,7 +288,7 @@
 
         <div class="signature-panel">
           <p style="margin-bottom:.4rem;">
-            لطفاً امضاء الکترونیک خود را در کادر زیر وارد کنید. این امضاء به‌همراه شرایط و تیک‌ها در یک تصویر ذخیره می‌شود.
+            لطفاً امضاء الکترونیک خود را در کادر زیر وارد کنید.
           </p>
 
           <canvas id="signature-pad" class="signature-canvas"></canvas>
@@ -305,38 +301,58 @@
             <label>نام و نام خانوادگی جهت امضاء</label>
             <input type="text" id="signature-name" name="signature_name" placeholder="عیناً مطابق شناسنامه" required>
           </div>
+
+          <p id="signature-confirm" class="signature-confirm">
+            <!-- اینجا با جاوااسکریپت پر می‌شود -->
+          </p>
         </div>
       </div>
 
-      <!-- دکمه‌ها -->
+      <!-- دکمه ارسال -->
       <div class="buttons">
         <button type="submit" class="btn-main">ارسال و ثبت در واتساپ میم‌استور</button>
-        <button type="button" id="download-terms-png" class="btn-secondary">
-          دانلود تصویر شرایط و امضاء (PNG)
-        </button>
       </div>
 
       <p class="hint-text">
-        برای تکمیل ثبت‌نام، پس از ارسال واتساپ، <strong>دانلود و ارسال تصویر شرایط و امضاء</strong> به‌صورت
-        فایل (Document) در واتساپ الزامی است.
+        پس از ارسال فرم در واتساپ، لطفاً <strong>تصویر روی کارت ملی</strong> خود را نیز ارسال کنید.
       </p>
     </form>
   </div>
 
-  <!-- html2canvas برای ساخت PNG -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
   <script>
-    // وقتی نام اصلی پر شد، اگر فیلد امضاء خالی است آن را پر کن
+    // وقتی نام اصلی پر شد، اگر فیلد امضاء خالی است، آن را پر کن
     const fullNameInput = document.getElementById('full-name');
-    const sigNameInput = document.getElementById('signature-name');
+    const sigNameInput  = document.getElementById('signature-name');
+    const sigConfirm    = document.getElementById('signature-confirm');
 
     fullNameInput.addEventListener('input', function () {
       if (!sigNameInput.value.trim()) {
         sigNameInput.value = this.value;
       }
+      updateSignatureConfirmText();
     });
+
+    sigNameInput.addEventListener('input', function () {
+      updateSignatureConfirmText();
+    });
+
+    function updateSignatureConfirmText() {
+      const nameForSig =
+        (sigNameInput.value && sigNameInput.value.trim()) ||
+        (fullNameInput.value && fullNameInput.value.trim()) ||
+        '';
+
+      if (!nameForSig) {
+        // اگر اسمی نیست، فقط متن رو خالی ولی بعد از امضاء نمایش داده می‌شود
+        sigConfirm.textContent = '';
+        return;
+      }
+
+      sigConfirm.textContent =
+        '✔ امضاء الکترونیک اینجانب «' +
+        nameForSig +
+        '» با پذیرش تمامی شرایط و قوانین فوق ثبت گردید.';
+    }
 
     // فرمت سه‌رقمی برای اعتبار موردنیاز
     const creditInput = document.getElementById('credit-needed');
@@ -358,14 +374,15 @@
     function resizeCanvas() {
       const ratio = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * ratio;
+      canvas.width  = rect.width * ratio;
       canvas.height = rect.height * ratio;
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
+      ctx.lineCap   = 'round';
       ctx.strokeStyle = '#000';
       ctx.clearRect(0, 0, rect.width, rect.height);
       signatureDrawn = false;
+      sigConfirm.style.display = 'none';
     }
 
     function getPos(e) {
@@ -397,6 +414,12 @@
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
       signatureDrawn = true;
+
+      // وقتی امضاء انجام شد، متن تأیید را (اگر نام دارد) نشان بده
+      if (!sigConfirm.textContent.trim()) {
+        updateSignatureConfirmText();
+      }
+      sigConfirm.style.display = 'block';
     }
 
     function endDraw(e) {
@@ -422,6 +445,7 @@
       const rect = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
       signatureDrawn = false;
+      sigConfirm.style.display = 'none';
     });
 
     // ارسال به واتساپ
@@ -460,51 +484,12 @@
       msg += 'نام جهت امضاء: ' + (data.get('signature_name') || '') + '\n';
       msg += 'وضعیت امضاء در فرم: ' + (signatureDrawn ? 'ثبت شده ✅' : 'ثبت نشده ⚠️') + '\n\n';
 
-      msg += 'یادآوری: لطفاً تصویر روی کارت ملی و تصویر شرایط + امضاء را به‌صورت Document ارسال کنید.';
+      msg += 'یادآوری: لطفاً تصویر روی کارت ملی را ارسال کنید.';
 
       const shopNumber = '989999926021';
       const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
       window.open(waUrl, '_blank');
-    });
-
-    // دکمه دانلود PNG برای شرایط + تیک‌ها + امضاء
-    document.getElementById('download-terms-png').addEventListener('click', function () {
-      const fee = document.getElementById('agree_fee');
-      const info = document.getElementById('agree_info');
-      const terms = document.getElementById('agree_terms');
-
-      if (!fee.checked || !info.checked || !terms.checked) {
-        alert('لطفاً قبل از دانلود، هر سه تیک تأیید را بزنید.');
-        return;
-      }
-      if (!signatureDrawn) {
-        alert('لطفاً امضاء خود را در کادر امضاء وارد کنید، سپس تصویر را دانلود کنید.');
-        return;
-      }
-      if (!sigNameInput.value.trim()) {
-        alert('لطفاً نام جهت امضاء را وارد کنید.');
-        sigNameInput.focus();
-        return;
-      }
-
-      const confirmSection = document.getElementById('confirm-section');
-
-      html2canvas(confirmSection, {
-        scale: 3,
-        useCORS: true,
-        scrollY: -window.scrollY
-      }).then(function (canvasResult) {
-        const link = document.createElement('a');
-        link.href = canvasResult.toDataURL('image/png', 1.0);
-        link.download = 'mimstore-terms-signature.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        alert('تصویر با موفقیت ذخیره شد. در پوشه‌ی Downloads / Files گوشی‌تان آن را به‌صورت Document در واتساپ ارسال کنید.');
-      }).catch(function (err) {
-        alert('خطا در ساخت تصویر. اگر ممکنه با یک مرورگر دیگر یا با VPN امتحان کن.\n\nجزئیات خطا: ' + err);
-      });
     });
   </script>
 </body>
