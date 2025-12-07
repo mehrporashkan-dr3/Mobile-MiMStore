@@ -266,13 +266,11 @@
     </form>
   </div>
 
-  <!-- html2canvas برای ساخت JPG -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-          integrity="sha512-BNa5lK2nq2PpPAmhpN6wX+edE2l50Tzw9uQWGWpZJYG1ChcxrFAuo0xO+ogzAm8h1Hn0pVITwW2N9Q4vNKOu0w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- html2canvas از jsDelivr بدون دردسر -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-    // ارسال به واتساپ (متن اطلاعات)
+    // ارسال اطلاعات به واتساپ (فقط متن)
     document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -301,16 +299,16 @@
       msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\\n\\n';
 
       msg += '✅ کاربر شرایط و هزینه‌ها را پذیرفته است.\\n';
-      msg += 'یادآوری: لطفاً تصویر روی کارت ملی نیز در همین واتساپ ارسال شود.';
+      msg += 'یادآوری: لطفاً تصویر روی کارت ملی و تصویر فرم دانلودشده را نیز در همین واتساپ ارسال کنید.';
 
-      // شماره واتساپ میم‌استور: 09999926021 → با کد کشور و بدون صفر
-      const shopNumber = '98999926021';
+      // شماره واتساپ: 09999926021 → با کد کشور
+      const shopNumber = '989999926021';
       const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
       window.open(waUrl, '_blank');
     });
 
-    // فرمت سه‌رقمی برای مبلغ اعتبار موردنیاز
+    // فرمت سه‌رقمی برای اعتبار موردنیاز
     const creditInput = document.getElementById('credit-needed');
     creditInput.addEventListener('input', function () {
       let val = this.value.replace(/[^0-9]/g, '');
@@ -321,12 +319,17 @@
       this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
 
-    // دکمه دانلود JPG با کیفیت بالا
+    // دکمه دانلود JPG (کیفیت بالا) + هندل خطا
     document.getElementById('download-jpg').addEventListener('click', function () {
+      if (typeof html2canvas === 'undefined') {
+        alert('مشکل در بارگذاری ابزار ساخت تصویر. لطفاً یک بار صفحه را رفرش کنید.');
+        return;
+      }
+
       const form = document.getElementById('mimstore-credit-form');
 
       html2canvas(form, {
-        scale: 4,              // کیفیت خیلی بالا
+        scale: 4,              // کیفیت بالا
         useCORS: true,
         backgroundColor: '#ffffff',
         scrollY: -window.scrollY
@@ -335,6 +338,9 @@
         link.href = canvas.toDataURL('image/jpeg', 1.0); // کیفیت ۱۰۰٪
         link.download = 'mimstore-form-hd.jpg';
         link.click();
+      }).catch(err => {
+        console.error(err);
+        alert('در ساخت تصویر مشکلی پیش آمد. لطفاً دوباره امتحان کنید.');
       });
     });
   </script>
