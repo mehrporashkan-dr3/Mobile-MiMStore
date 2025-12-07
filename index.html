@@ -99,6 +99,7 @@
       border-radius: 6px;
       background: #fff;
       touch-action: none;
+      display: block;
     }
     .signature-actions {
       margin-top: .35rem;
@@ -300,10 +301,10 @@
             <button type="button" id="clear-signature">پاک کردن امضاء</button>
           </div>
 
-          <p class="signature-name-line">
-            نام و نام خانوادگی متقاضی:
-            <strong><span id="sig-name-preview">........................</span></strong>
-          </p>
+          <div class="signature-name-line">
+            <label>نام و نام خانوادگی جهت امضاء</label>
+            <input type="text" id="signature-name" name="signature_name" placeholder="عیناً مطابق شناسنامه" required>
+          </div>
         </div>
       </div>
 
@@ -327,16 +328,17 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
-    // --- سینک نام اصلی با خط امضاء ---
+    // وقتی نام اصلی پر شد، اگر فیلد امضاء خالی است آن را پر کن
     const fullNameInput = document.getElementById('full-name');
-    const sigNamePreview = document.getElementById('sig-name-preview');
+    const sigNameInput = document.getElementById('signature-name');
 
     fullNameInput.addEventListener('input', function () {
-      const v = this.value.trim();
-      sigNamePreview.textContent = v || '........................';
+      if (!sigNameInput.value.trim()) {
+        sigNameInput.value = this.value;
+      }
     });
 
-    // --- فرمت سه‌رقمی برای اعتبار موردنیاز ---
+    // فرمت سه‌رقمی برای اعتبار موردنیاز
     const creditInput = document.getElementById('credit-needed');
     creditInput.addEventListener('input', function () {
       let val = this.value.replace(/,/g, '').replace(/[^0-9]/g, '');
@@ -347,7 +349,7 @@
       this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
 
-    // --- امضاء الکترونیک (canvas) ---
+    // امضاء الکترونیک (canvas)
     const canvas = document.getElementById('signature-pad');
     const ctx = canvas.getContext('2d');
     let drawing = false;
@@ -422,7 +424,7 @@
       signatureDrawn = false;
     });
 
-    // --- ارسال به واتساپ ---
+    // ارسال به واتساپ
     document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -455,7 +457,7 @@
       msg += '- صحت اطلاعات و اجازه استعلام از مراجع مجاز\n';
       msg += '- پذیرش نرخ خدمات مالی ۱.۹٪ و هزینه خدمات تسهیلاتی ۱۱.۵٪\n\n';
 
-      msg += 'نام روی امضاء الکترونیک: ' + (data.get('full_name') || '') + '\n';
+      msg += 'نام جهت امضاء: ' + (data.get('signature_name') || '') + '\n';
       msg += 'وضعیت امضاء در فرم: ' + (signatureDrawn ? 'ثبت شده ✅' : 'ثبت نشده ⚠️') + '\n\n';
 
       msg += 'یادآوری: لطفاً تصویر روی کارت ملی و تصویر شرایط + امضاء را به‌صورت Document ارسال کنید.';
@@ -466,7 +468,7 @@
       window.open(waUrl, '_blank');
     });
 
-    // --- دکمه دانلود PNG برای شرایط + تیک‌ها + امضاء ---
+    // دکمه دانلود PNG برای شرایط + تیک‌ها + امضاء
     document.getElementById('download-terms-png').addEventListener('click', function () {
       const fee = document.getElementById('agree_fee');
       const info = document.getElementById('agree_info');
@@ -480,28 +482,29 @@
         alert('لطفاً امضاء خود را در کادر امضاء وارد کنید، سپس تصویر را دانلود کنید.');
         return;
       }
+      if (!sigNameInput.value.trim()) {
+        alert('لطفاً نام جهت امضاء را وارد کنید.');
+        sigNameInput.focus();
+        return;
+      }
 
       const confirmSection = document.getElementById('confirm-section');
 
-      try {
-        html2canvas(confirmSection, {
-          scale: 3,
-          useCORS: true,
-          scrollY: -window.scrollY
-        }).then(function (canvasResult) {
-          const link = document.createElement('a');
-          link.href = canvasResult.toDataURL('image/png', 1.0);
-          link.download = 'mimstore-terms-signature.png';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          alert('تصویر با موفقیت ذخیره شد. در پوشه‌ی Downloads / Files گوشی‌تان آن را به‌صورت Document در واتساپ ارسال کنید.');
-        }).catch(function (err) {
-          alert('خطا در ساخت تصویر. اگر VPN بسته است یک‌بار با VPN امتحان کن یا مرورگر دیگری استفاده کن.\n\nجزئیات خطا: ' + err);
-        });
-      } catch (e) {
-        alert('html2canvas روی این مرورگر اجرا نشد. اگر می‌توانی با Chrome / مرورگر دیگر یا با VPN تست کن.');
-      }
+      html2canvas(confirmSection, {
+        scale: 3,
+        useCORS: true,
+        scrollY: -window.scrollY
+      }).then(function (canvasResult) {
+        const link = document.createElement('a');
+        link.href = canvasResult.toDataURL('image/png', 1.0);
+        link.download = 'mimstore-terms-signature.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert('تصویر با موفقیت ذخیره شد. در پوشه‌ی Downloads / Files گوشی‌تان آن را به‌صورت Document در واتساپ ارسال کنید.');
+      }).catch(function (err) {
+        alert('خطا در ساخت تصویر. اگر ممکنه با یک مرورگر دیگر یا با VPN امتحان کن.\n\nجزئیات خطا: ' + err);
+      });
     });
   </script>
 </body>
