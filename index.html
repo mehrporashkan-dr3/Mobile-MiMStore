@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>فرم درخواست خرید اقساطی – میم استور</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -11,6 +12,7 @@
       margin: 0;
       padding: 1rem;
     }
+
     .container {
       max-width: 720px;
       margin: 0 auto;
@@ -19,26 +21,31 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
+
     h2 {
       text-align: center;
       margin-top: 0;
       margin-bottom: .75rem;
       font-size: 1.1rem;
     }
+
     h3 {
       margin-top: 1.75rem;
       border-right: 3px solid #c00;
       padding-right: .5rem;
       font-size: 1rem;
     }
+
     p, label {
       font-size: .9rem;
     }
+
     input, select, textarea, button {
       font-family: inherit;
       font-size: .9rem;
       line-height: 1.4;
     }
+
     input[type="text"],
     input[type="tel"],
     input[type="number"],
@@ -52,16 +59,19 @@
       border: 1px solid #ccc;
       outline: none;
     }
+
     input:focus,
     textarea:focus,
     select:focus {
       border-color: #c00;
       box-shadow: 0 0 0 2px rgba(204,0,0,0.12);
     }
+
     textarea {
       resize: vertical;
       min-height: 70px;
     }
+
     .terms-box {
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -72,12 +82,14 @@
       text-align: justify;
       background: #fafafa;
     }
+
     .checkbox-row {
       display: block;
       margin-bottom: .5rem;
       font-size: .85rem;
       line-height: 1.7;
     }
+
     .checkbox-row input {
       margin-left: .4rem;
     }
@@ -88,6 +100,7 @@
       gap: .5rem;
       margin-top: .75rem;
     }
+
     .btn-main,
     .btn-secondary {
       width: 100%;
@@ -97,17 +110,21 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
     .btn-main {
       background: #d32f2f;
       color: #fff;
     }
+
     .btn-main:hover {
       background: #b71c1c;
     }
+
     .btn-secondary {
       background: #eee;
       color: #333;
     }
+
     .btn-secondary:hover {
       background: #ddd;
     }
@@ -249,49 +266,51 @@
     </form>
   </div>
 
-  <!-- html2canvas برای ساخت JPG – نسخه بدون integrity -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- html2canvas برای ساخت JPG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+          integrity="sha512-BNa5lK2nq2PpPAmhpN6wX+edE2l50Tzw9uQWGWpZJYG1ChcxrFAuo0xO+ogzAm8h1Hn0pVITwW2N9Q4vNKOu0w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
-    // ارسال به واتساپ
+    // ارسال به واتساپ (متن اطلاعات)
     document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const data = new FormData(this);
-      let msg = 'درخواست خرید اقساطی میم‌استور\n\n';
+      let msg = 'درخواست خرید اقساطی میم‌استور\\n\\n';
 
-      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\n';
-      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\n';
-      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\n';
-      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\n';
-      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\n';
-      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\n';
-      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\n';
-      msg += 'تحصیلات: ' + (data.get('education') || '') + '\n';
-      msg += 'موبایل: ' + (data.get('mobile') || '') + '\n\n';
+      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\\n';
+      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\\n';
+      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\\n';
+      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\\n';
+      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\\n';
+      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\\n';
+      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\\n';
+      msg += 'تحصیلات: ' + (data.get('education') || '') + '\\n';
+      msg += 'موبایل: ' + (data.get('mobile') || '') + '\\n\\n';
 
-      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\n';
-      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\n\n';
+      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\\n';
+      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\\n\\n';
 
-      msg += 'شغل: ' + (data.get('job_title') || '') + '\n';
-      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\n\n';
+      msg += 'شغل: ' + (data.get('job_title') || '') + '\\n';
+      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\\n\\n';
 
-      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\n';
-      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\n';
-      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\n';
-      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\n\n';
+      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\\n';
+      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\\n';
+      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\\n';
+      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\\n\\n';
 
-      msg += '✅ کاربر شرایط و هزینه‌ها را پذیرفته است.\n';
+      msg += '✅ کاربر شرایط و هزینه‌ها را پذیرفته است.\\n';
       msg += 'یادآوری: لطفاً تصویر روی کارت ملی نیز در همین واتساپ ارسال شود.';
 
-      // شماره واتساپ میم‌استور: 09999926021  →  بدون صفر + کد کشور
-      const shopNumber = '989999926021';
+      // شماره واتساپ میم‌استور: 09999926021 → با کد کشور و بدون صفر
+      const shopNumber = '98999926021';
       const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
       window.open(waUrl, '_blank');
     });
 
-    // فرمت سه‌رقمی برای اعتبار موردنیاز
+    // فرمت سه‌رقمی برای مبلغ اعتبار موردنیاز
     const creditInput = document.getElementById('credit-needed');
     creditInput.addEventListener('input', function () {
       let val = this.value.replace(/[^0-9]/g, '');
@@ -302,23 +321,19 @@
       this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
 
-    // دکمه دانلود JPG (کیفیت بالا)
+    // دکمه دانلود JPG با کیفیت بالا
     document.getElementById('download-jpg').addEventListener('click', function () {
       const form = document.getElementById('mimstore-credit-form');
 
-      if (typeof html2canvas === 'undefined') {
-        alert('مشکلی در بارگذاری کتابخانه ساخت تصویر پیش آمده. لطفاً یک‌بار صفحه را رفرش کنید.');
-        return;
-      }
-
       html2canvas(form, {
-        scale: 3,           // کیفیت بالاتر
+        scale: 4,              // کیفیت خیلی بالا
         useCORS: true,
+        backgroundColor: '#ffffff',
         scrollY: -window.scrollY
       }).then(canvas => {
         const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/jpeg', 0.95);
-        link.download = 'mimstore-form.jpg';
+        link.href = canvas.toDataURL('image/jpeg', 1.0); // کیفیت ۱۰۰٪
+        link.download = 'mimstore-form-hd.jpg';
         link.click();
       });
     });
