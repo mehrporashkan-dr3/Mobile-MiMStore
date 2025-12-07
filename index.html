@@ -98,7 +98,7 @@
       display: flex;
       flex-direction: column;
       gap: .5rem;
-      margin-top: .75rem;
+      margin-top: 1rem;
     }
 
     .btn-main,
@@ -111,148 +111,304 @@
       cursor: pointer;
     }
 
+    /* سبز واتساپی */
     .btn-main {
-      background: #d32f2f;
+      background: #25D366;
       color: #fff;
     }
 
+    /* دکمه‌های دانلود – تیره و شیک */
     .btn-secondary {
-      background: #555;
+      background: #333;
       color: #fff;
     }
+
+    .btn-main:hover {
+      background: #1ebe5a;
+    }
+
+    .btn-secondary:hover {
+      background: #222;
+    }
+
+    .page {
+      padding: 1rem 0;
+      border-bottom: 1px dashed #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .page:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .page-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: .5rem;
+    }
+
+    .note {
+      font-size: .8rem;
+      color: #555;
+      margin-top: .25rem;
+    }
+
   </style>
 </head>
 <body>
   <div class="container">
     <form id="mimstore-credit-form">
-      <h2>فرم درخواست خرید اقساطی – میم استور</h2>
 
-      <p style="text-align:justify; line-height:1.7;">
-        لطفاً این فرم را تنها توسط متقاضی اصلی خرید اقساطی تکمیل کنید. تمامی اطلاعات، از جمله چک و مدارک اعتباری،
-        باید به نام همان متقاضی (دارنده دسته‌چک) باشد.
-      </p>
+      <!-- صفحه ۱: اطلاعات متقاضی -->
+      <div id="page1" class="page">
+        <div class="page-title">صفحه ۱ – اطلاعات متقاضی</div>
 
-      <h3>۱. اطلاعات هویتی</h3>
+        <h2>فرم درخواست خرید اقساطی – میم استور</h2>
 
-      <label>نام و نام خانوادگی</label>
-      <input type="text" name="full_name" required>
+        <p style="text-align:justify; line-height:1.7;">
+          لطفاً این فرم را تنها توسط متقاضی اصلی خرید اقساطی تکمیل کنید. تمامی اطلاعات، از جمله چک و مدارک اعتباری،
+          باید به نام همان متقاضی (دارنده دسته‌چک) باشد. در صورت مغایرت، بررسی درخواست انجام نخواهد شد.
+        </p>
 
-      <label>نام پدر</label>
-      <input type="text" name="father_name" required>
+        <h3>۱. اطلاعات هویتی متقاضی</h3>
 
-      <label>کد ملی</label>
-      <input type="text" name="national_id" required minlength="10" maxlength="10">
+        <label>نام و نام خانوادگی</label>
+        <input type="text" name="full_name" required placeholder="مثال: علی رضایی">
 
-      <label>شماره شناسنامه</label>
-      <input type="text" name="id_number" required>
+        <label>نام پدر</label>
+        <input type="text" name="father_name" required placeholder="مثال: حسن">
 
-      <label>محل صدور</label>
-      <input type="text" name="id_place" required>
+        <label>کد ملی</label>
+        <input type="text" name="national_id" required minlength="10" maxlength="10" placeholder="۱۰ رقم">
 
-      <label>تاریخ تولد</label>
-      <input type="text" name="birth_date" required>
+        <label>شماره شناسنامه</label>
+        <input type="text" name="id_number" required>
 
-      <label>وضعیت تأهل</label>
-      <select name="marital_status" required>
-        <option value="">انتخاب کنید</option>
-        <option value="مجرد">مجرد</option>
-        <option value="متأهل">متأهل</option>
-      </select>
+        <label>محل صدور شناسنامه</label>
+        <input type="text" name="id_place" required placeholder="مثال: تهران">
 
-      <label>تحصیلات</label>
-      <select name="education" required>
-        <option value="">انتخاب کنید</option>
-        <option value="دیپلم">دیپلم</option>
-        <option value="کاردانی">کاردانی</option>
-        <option value="کارشناسی">کارشناسی</option>
-        <option value="ارشد">ارشد</option>
-      </select>
+        <label>تاریخ تولد (شمسی)</label>
+        <input type="text" name="birth_date" required placeholder="مثال: 1378/05/21">
 
-      <h3>۲. اطلاعات تماس و آدرس</h3>
+        <label>وضعیت تأهل</label>
+        <select name="marital_status" required>
+          <option value="">انتخاب کنید</option>
+          <option value="مجرد">مجرد</option>
+          <option value="متأهل">متأهل</option>
+        </select>
 
-      <label>شماره موبایل</label>
-      <input type="tel" name="mobile" required>
+        <label>میزان تحصیلات</label>
+        <select name="education" required>
+          <option value="">انتخاب کنید</option>
+          <option value="دیپلم">دیپلم</option>
+          <option value="کاردانی">کاردانی</option>
+          <option value="کارشناسی">کارشناسی</option>
+          <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+          <option value="دکتری">دکتری</option>
+        </select>
 
-      <label>آدرس کامل</label>
-      <textarea name="address" required></textarea>
+        <h3>۲. اطلاعات تماس و محل سکونت</h3>
 
-      <label>کد پستی</label>
-      <input type="text" name="postal_code" maxlength="10" required>
+        <label>شماره موبایل به نام خودتان</label>
+        <input type="tel" name="mobile" required placeholder="مثال: 09XXXXXXXXX">
 
-      <h3>۳. اطلاعات شغلی</h3>
+        <label>نشانی کامل محل سکونت</label>
+        <textarea name="address" required placeholder="شهر، خیابان، کوچه، پلاک، واحد"></textarea>
 
-      <label>شغل</label>
-      <input type="text" name="job_title" required>
+        <label>کد پستی</label>
+        <input type="text" name="postal_code" required minlength="10" maxlength="10">
 
-      <label>سابقه کار</label>
-      <input type="number" name="job_years" required>
+        <h3>۳. اطلاعات شغلی</h3>
 
-      <h3>۴. اطلاعات اعتبار</h3>
+        <label>شغل / عنوان شغلی</label>
+        <input type="text" name="job_title" required placeholder="مثال: فروشنده موبایل">
 
-      <label>سقف اعتبار</label>
-      <label class="checkbox-row"><input type="radio" name="credit_cap" value="۵۰ میلیون">۵۰ میلیون</label>
-      <label class="checkbox-row"><input type="radio" name="credit_cap" value="۱۰۰ میلیون">۱۰۰ میلیون</label>
+        <label>سابقه کار (چند سال)</label>
+        <input type="number" name="job_years" min="0" required placeholder="مثال: ۳">
 
-      <label>اعتبار موردنیاز</label>
-      <input type="text" id="credit-needed" name="credit_needed">
+        <h3>۴. اطلاعات اعتبار درخواستی</h3>
 
-      <label>مدل کالا</label>
-      <input type="text" name="product_model">
+        <p style="margin-bottom:.4rem;">سقف اعتبار درخواستی</p>
+        <label class="checkbox-row">
+          <input type="radio" name="credit_cap" value="۵۰ میلیون تومان" required>
+          ۵۰ میلیون تومان
+        </label>
+        <label class="checkbox-row" style="margin-bottom:.6rem;">
+          <input type="radio" name="credit_cap" value="۱۰۰ میلیون تومان (آیفون ۱۶ و ۱۷)">
+          ۱۰۰ میلیون تومان (فقط برای خرید آیفون ۱۶ و ۱۷)
+        </label>
 
-      <h3>۵. قوانین</h3>
-      <div class="terms-box">
-        کارمزد، استعلام، شرایط قرارداد و ...
+        <label>اعتبار مورد نیاز (در صورت کمتر بودن)</label>
+        <input type="text" id="credit-needed" name="credit_needed" placeholder="مثال: 30,000,000">
+
+        <label>مدل کالا / توضیحات خرید</label>
+        <input type="text" name="product_model" placeholder="مثال: iPhone 13 ، Samsung S24">
+
+        <label>توضیحات تکمیلی (اختیاری)</label>
+        <textarea name="extra_note" placeholder="هر توضیحی لازم است بنویسید"></textarea>
+
+        <h3>۵. مدارک</h3>
+
+        <p style="font-size:.9rem; line-height:1.7; text-align:justify;">
+          پس از ارسال این فرم، <strong>ارسال تصویر واضح روی کارت ملی از طریق واتساپ به شماره میم‌استور الزامی است.</strong><br>
+          بدون دریافت تصویر کارت ملی، امکان ادامه روند اعتبارسنجی وجود نخواهد داشت.
+        </p>
       </div>
 
-      <label class="checkbox-row">
-        <input type="checkbox" required> قوانین بالا را می‌پذیرم
-      </label>
+      <!-- صفحه ۲: شرایط و مقررات -->
+      <div id="page2" class="page">
+        <div class="page-title">صفحه ۲ – شرایط بررسی و خدمات مالی</div>
 
+        <h3>شرایط بررسی و خدمات مالی</h3>
+
+        <div class="terms-box">
+          <p><strong>ماده ۱ – هزینه بررسی و تشکیل پرونده</strong><br>
+          مبلغ ۲۵۰,۰۰۰ تومان بابت استعلام بانکی، رتبه اعتباری و تشکیل پرونده از متقاضی دریافت می‌گردد.
+          این مبلغ بابت ارائه خدمات اولیه بوده و در هر حالت (رد اعتبارسنجی یا انصراف متقاضی) قابل استرداد نمی‌باشد.</p>
+
+          <p><strong>ماده ۲ – نرخ خدمات مالی</strong><br>
+          نرخ خدمات مالی (سود ماهیانه) برابر با ۱.۹٪ در ماه می‌باشد.</p>
+
+          <p><strong>ماده ۳ – هزینه خدمات تسهیلاتی</strong><br>
+          پس از تأیید رتبه اعتباری، مبلغ ۱۱.۵٪ از کل اعتبار درخواستی بابت هزینه خدمات تسهیلاتی و مالی دریافت می‌شود.
+          این مبلغ از اصل اعتبار کسر نمی‌شود و متقاضی موظف است آن را جداگانه پرداخت نماید.</p>
+
+          <p><strong>ماده ۴ – پرداخت اعتبار</strong><br>
+          کل مبلغ اعتبار درخواستی، پس از طی مراحل تأیید، به‌صورت کامل در اختیار متقاضی قرار می‌گیرد.
+          دوره بازپرداخت اقساط: ۱۲ ماه (یک‌ساله) می‌باشد.</p>
+
+          <p><strong>ماده ۵ – ضمانت مورد نیاز</strong><br>
+          برای عقد قرارداد، ارائه یک برگ چک صیادی بنفش به نام متقاضی الزامی است. ابتدا تصویر چک بررسی می‌شود و سپس اصل چک باید از طریق پست برای شرکت ارسال گردد.</p>
+
+          <p><strong>ماده ۶ – ارسال چک و مدت زمان ثبت اعتبار</strong><br>
+          مدت زمان تقریبی دریافت اصل چک توسط شرکت ۳ تا ۵ روز کاری است. فعال‌سازی اعتبار پس از تحویل فیزیکی چک انجام می‌شود و در صورت وصول زودتر، مراحل سریع‌تر تکمیل می‌گردد.</p>
+
+          <p><strong>ماده ۷ – نوسانات قیمت کالا</strong><br>
+          نظر به نوسانات قیمت کالا، مبلغ نهایی خرید منوط به زمان تکمیل مراحل و ثبت قرارداد بوده و بر اساس نرخ روز محاسبه می‌گردد.</p>
+        </div>
+
+        <h3>تأیید متقاضی</h3>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="agree_fee" required>
+          متعهد می‌شوم مبلغ <strong>۲۵۰٬۰۰۰ تومان</strong> بابت استعلام و تشکیل پرونده را پرداخت نمایم و آگاه هستم که این مبلغ در هیچ شرایطی قابل استرداد نیست.
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="agree_info" required>
+          تأیید می‌کنم کلیه اطلاعات و مدارک ارائه‌شده صحیح و واقعی است و به واحد اعتباری میم‌استور اجازه استعلام لازم از مراجع مجاز را می‌دهم.
+        </label>
+
+        <label class="checkbox-row" style="margin-bottom:1rem;">
+          <input type="checkbox" name="agree_terms" required>
+          با مطالعه کامل شرایط فوق، نرخ خدمات مالی <strong>۱.۹٪</strong> و هزینه خدمات تسهیلاتی <strong>۱۱.۵٪</strong> را می‌پذیرم و می‌دانم ارسال این فرم صرفاً جهت بررسی اولیه می‌باشد.
+        </label>
+
+        <p style="font-size:.85rem; line-height:1.7;">
+          📍 میم استور – فروش اقساطی موبایل و لوازم جانبی<br>
+          📞 واتساپ: 09999926021<br>
+          🏠 آدرس: خیابان دانشگاه، کوچه دانشگاه ۲، پاساژ تجاری علاالدین، طبقه همکف، پلاک ۱۵
+        </p>
+      </div>
+
+      <!-- دکمه‌ها -->
       <div class="buttons">
-        <button type="submit" class="btn-main">ارسال به واتساپ</button>
-        <button type="button" id="download-jpg" class="btn-secondary">دانلود فرم با کیفیت (PNG)</button>
+        <button type="submit" class="btn-main">ارسال واتساپ</button>
+        <button type="button" id="download-page1" class="btn-secondary">دانلود صفحه ۱ (PNG)</button>
+        <button type="button" id="download-page2" class="btn-secondary">دانلود صفحه ۲ (PNG)</button>
+        <p class="note">
+          برای ثبت بهتر، پس از دانلود هر صفحه، آن را از گالری به صورت فایل (Document) در واتساپ ارسال نمایید.
+        </p>
       </div>
+
     </form>
   </div>
 
+  <!-- html2canvas برای ساخت PNG -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-    // ارسال به واتساپ
-    document.getElementById('mimstore-credit-form').addEventListener('submit', function(e) {
+    // ارسال اطلاعات به واتساپ (متن کامل فرم)
+    document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const data = new FormData(this);
-      let msg = '';
+      let msg = 'درخواست خرید اقساطی میم‌استور\\n\\n';
 
-      for (let pair of data.entries()) {
-        msg += pair[0] + ': ' + pair[1] + '\\n';
+      msg += 'نام و نام خانوادگی: ' + (data.get('full_name') || '') + '\\n';
+      msg += 'نام پدر: ' + (data.get('father_name') || '') + '\\n';
+      msg += 'کد ملی: ' + (data.get('national_id') || '') + '\\n';
+      msg += 'شماره شناسنامه: ' + (data.get('id_number') || '') + '\\n';
+      msg += 'محل صدور شناسنامه: ' + (data.get('id_place') || '') + '\\n';
+      msg += 'تاریخ تولد: ' + (data.get('birth_date') || '') + '\\n';
+      msg += 'وضعیت تأهل: ' + (data.get('marital_status') || '') + '\\n';
+      msg += 'تحصیلات: ' + (data.get('education') || '') + '\\n';
+      msg += 'موبایل: ' + (data.get('mobile') || '') + '\\n\\n';
+
+      msg += 'آدرس محل سکونت: ' + (data.get('address') || '') + '\\n';
+      msg += 'کد پستی: ' + (data.get('postal_code') || '') + '\\n\\n';
+
+      msg += 'شغل: ' + (data.get('job_title') || '') + '\\n';
+      msg += 'سابقه کار (سال): ' + (data.get('job_years') || '') + '\\n\\n';
+
+      msg += 'سقف اعتبار درخواستی: ' + (data.get('credit_cap') || '') + '\\n';
+      msg += 'اعتبار مورد نیاز: ' + (data.get('credit_needed') || '') + '\\n';
+      msg += 'مدل / توضیحات کالا: ' + (data.get('product_model') || '') + '\\n';
+      msg += 'توضیحات تکمیلی: ' + (data.get('extra_note') || '') + '\\n\\n';
+
+      msg += '✅ کاربر شرایط را مطالعه کرده و تیک‌های تأیید را پذیرفته است.\\n';
+      msg += 'یادآوری: لطفاً تصویر کارت ملی و در صورت امکان تصاویر صفحات فرم را نیز ارسال نمایید.';
+
+      const shopNumber = '98999926021'; // 09999926021 با کد کشور
+      const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
+
+      window.open(waUrl, '_blank');
+    });
+
+    // فرمت سه‌رقمی برای مبلغ اعتبار موردنیاز
+    const creditInput = document.getElementById('credit-needed');
+    creditInput.addEventListener('input', function () {
+      let val = this.value.replace(/[^0-9]/g, '');
+      if (!val) {
+        this.value = '';
+        return;
+      }
+      this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+
+    // تابع عمومی برای ساخت PNG از یک صفحه
+    function downloadPageAsPNG(pageId, fileName) {
+      const page = document.getElementById(pageId);
+
+      if (typeof html2canvas === 'undefined') {
+        alert('مشکل در بارگذاری ابزار ساخت تصویر. لطفاً صفحه را رفرش کنید.');
+        return;
       }
 
-      const wa = 'https://wa.me/98999926021?text=' + encodeURIComponent(msg);
-      window.open(wa, '_blank');
-    });
-
-    // جداکننده سه‌رقمی عدد
-    document.getElementById('credit-needed').addEventListener('input', function () {
-      let x = this.value.replace(/[^0-9]/g, '');
-      if (!x) return this.value = '';
-      this.value = x.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    });
-
-    // دانلود PNG با کیفیت بالا
-    document.getElementById('download-jpg').addEventListener('click', function() {
-      const form = document.getElementById('mimstore-credit-form');
-
-      html2canvas(form, {
-        scale: 4,
-        backgroundColor: '#fff'
+      html2canvas(page, {
+        scale: 4,              // کیفیت بالا
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        scrollY: -window.scrollY
       }).then(canvas => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
-        link.download = 'mimstore-form.png';
+        link.download = fileName;
         link.click();
+      }).catch(err => {
+        console.error(err);
+        alert('در ساخت تصویر مشکلی پیش آمد. لطفاً دوباره امتحان کنید.');
       });
+    }
+
+    // دکمه‌های دانلود صفحات
+    document.getElementById('download-page1').addEventListener('click', function () {
+      downloadPageAsPNG('page1', 'mimstore-form-page1.png');
+    });
+
+    document.getElementById('download-page2').addEventListener('click', function () {
+      downloadPageAsPNG('page2', 'mimstore-form-page2.png');
     });
   </script>
 </body>
