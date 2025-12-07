@@ -8,18 +8,16 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f5;
+      background: #e6e6e6;
       margin: 0;
       padding: 1rem;
     }
 
     .container {
       max-width: 720px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin: 0 auto 1rem auto;
+      padding: 0;
+      background: none;
     }
 
     h2 {
@@ -30,10 +28,10 @@
     }
 
     h3 {
-      margin-top: 1.75rem;
+      margin-top: 1.4rem;
       border-right: 3px solid #c00;
       padding-right: .5rem;
-      font-size: 1rem;
+      font-size: .98rem;
     }
 
     p, label {
@@ -43,7 +41,7 @@
     input, select, textarea, button {
       font-family: inherit;
       font-size: .9rem;
-      line-height: 1.4;
+      line-height: 1.6;
     }
 
     input[type="text"],
@@ -58,6 +56,7 @@
       border-radius: 6px;
       border: 1px solid #ccc;
       outline: none;
+      background: #fafafa;
     }
 
     input:focus,
@@ -65,6 +64,7 @@
     select:focus {
       border-color: #c00;
       box-shadow: 0 0 0 2px rgba(204,0,0,0.12);
+      background: #fff;
     }
 
     textarea {
@@ -72,22 +72,41 @@
       min-height: 70px;
     }
 
+    .page {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 1.7rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .page:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .page-title {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: .7rem;
+      font-size: .95rem;
+    }
+
     .terms-box {
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 1rem;
       margin-bottom: .75rem;
-      font-size: .85rem;
-      line-height: 1.9;
+      font-size: .86rem;
+      line-height: 1.95;
       text-align: justify;
       background: #fafafa;
     }
 
     .checkbox-row {
       display: block;
-      margin-bottom: .5rem;
-      font-size: .85rem;
-      line-height: 1.7;
+      margin-bottom: .55rem;
+      font-size: .86rem;
+      line-height: 1.8;
     }
 
     .checkbox-row input {
@@ -111,15 +130,8 @@
       cursor: pointer;
     }
 
-    /* سبز واتساپی */
     .btn-main {
       background: #25D366;
-      color: #fff;
-    }
-
-    /* دکمه‌های دانلود – تیره و شیک */
-    .btn-secondary {
-      background: #333;
       color: #fff;
     }
 
@@ -127,46 +139,34 @@
       background: #1ebe5a;
     }
 
+    .btn-secondary {
+      background: #333;
+      color: #fff;
+    }
+
     .btn-secondary:hover {
       background: #222;
-    }
-
-    .page {
-      padding: 1rem 0;
-      border-bottom: 1px dashed #ddd;
-      margin-bottom: 1rem;
-    }
-
-    .page:last-of-type {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    .page-title {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: .5rem;
     }
 
     .note {
       font-size: .8rem;
       color: #555;
-      margin-top: .25rem;
+      margin-top: .3rem;
+      line-height: 1.6;
     }
-
   </style>
 </head>
 <body>
   <div class="container">
     <form id="mimstore-credit-form">
 
-      <!-- صفحه ۱: اطلاعات متقاضی -->
+      <!-- صفحه ۱ -->
       <div id="page1" class="page">
         <div class="page-title">صفحه ۱ – اطلاعات متقاضی</div>
 
         <h2>فرم درخواست خرید اقساطی – میم استور</h2>
 
-        <p style="text-align:justify; line-height:1.7;">
+        <p style="text-align:justify; line-height:1.9; margin-bottom: .8rem;">
           لطفاً این فرم را تنها توسط متقاضی اصلی خرید اقساطی تکمیل کنید. تمامی اطلاعات، از جمله چک و مدارک اعتباری،
           باید به نام همان متقاضی (دارنده دسته‌چک) باشد. در صورت مغایرت، بررسی درخواست انجام نخواهد شد.
         </p>
@@ -250,13 +250,13 @@
 
         <h3>۵. مدارک</h3>
 
-        <p style="font-size:.9rem; line-height:1.7; text-align:justify;">
+        <p style="font-size:.9rem; line-height:1.9; text-align:justify;">
           پس از ارسال این فرم، <strong>ارسال تصویر واضح روی کارت ملی از طریق واتساپ به شماره میم‌استور الزامی است.</strong><br>
           بدون دریافت تصویر کارت ملی، امکان ادامه روند اعتبارسنجی وجود نخواهد داشت.
         </p>
       </div>
 
-      <!-- صفحه ۲: شرایط و مقررات -->
+      <!-- صفحه ۲ -->
       <div id="page2" class="page">
         <div class="page-title">صفحه ۲ – شرایط بررسی و خدمات مالی</div>
 
@@ -305,7 +305,7 @@
           با مطالعه کامل شرایط فوق، نرخ خدمات مالی <strong>۱.۹٪</strong> و هزینه خدمات تسهیلاتی <strong>۱۱.۵٪</strong> را می‌پذیرم و می‌دانم ارسال این فرم صرفاً جهت بررسی اولیه می‌باشد.
         </label>
 
-        <p style="font-size:.85rem; line-height:1.7;">
+        <p style="font-size:.85rem; line-height:1.9;">
           📍 میم استور – فروش اقساطی موبایل و لوازم جانبی<br>
           📞 واتساپ: 09999926021<br>
           🏠 آدرس: خیابان دانشگاه، کوچه دانشگاه ۲، پاساژ تجاری علاالدین، طبقه همکف، پلاک ۱۵
@@ -318,18 +318,18 @@
         <button type="button" id="download-page1" class="btn-secondary">دانلود صفحه ۱ (PNG)</button>
         <button type="button" id="download-page2" class="btn-secondary">دانلود صفحه ۲ (PNG)</button>
         <p class="note">
-          برای ثبت بهتر، پس از دانلود هر صفحه، آن را از گالری به صورت فایل (Document) در واتساپ ارسال نمایید.
+          برای کیفیت بهتر، بعد از دانلود هر صفحه، آن را از گالری به صورت <strong>Document</strong> در واتساپ ارسال کنید (نه به‌عنوان Photo).
         </p>
       </div>
 
     </form>
   </div>
 
-  <!-- html2canvas برای ساخت PNG -->
+  <!-- html2canvas -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-    // ارسال اطلاعات به واتساپ (متن کامل فرم)
+    // ارسال متن فرم به واتساپ
     document.getElementById('mimstore-credit-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -360,7 +360,7 @@
       msg += '✅ کاربر شرایط را مطالعه کرده و تیک‌های تأیید را پذیرفته است.\\n';
       msg += 'یادآوری: لطفاً تصویر کارت ملی و در صورت امکان تصاویر صفحات فرم را نیز ارسال نمایید.';
 
-      const shopNumber = '98999926021'; // 09999926021 با کد کشور
+      const shopNumber = '989999926021'; // 09999926021 با کد کشور
       const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
 
       window.open(waUrl, '_blank');
@@ -377,7 +377,7 @@
       this.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
 
-    // تابع عمومی برای ساخت PNG از یک صفحه
+    // تابع عمومی ساخت PNG
     function downloadPageAsPNG(pageId, fileName) {
       const page = document.getElementById(pageId);
 
@@ -402,7 +402,6 @@
       });
     }
 
-    // دکمه‌های دانلود صفحات
     document.getElementById('download-page1').addEventListener('click', function () {
       downloadPageAsPNG('page1', 'mimstore-form-page1.png');
     });
