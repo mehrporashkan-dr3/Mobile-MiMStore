@@ -154,54 +154,6 @@
       margin-top: .3rem;
       line-height: 1.6;
     }
-
-    .upload-result {
-      margin-top: .35rem;
-      font-size: .8rem;
-      background: #f4f4f4;
-      border-radius: 8px;
-      padding: .5rem .6rem;
-      border: 1px solid #ddd;
-      display: none;
-    }
-
-    .upload-result a {
-      color: #0d47a1;
-      word-break: break-all;
-      text-decoration: none;
-    }
-
-    .upload-result a:hover {
-      text-decoration: underline;
-    }
-
-    .upload-actions {
-      margin-top: .35rem;
-      display: flex;
-      gap: .5rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-copy {
-      padding: .35rem .7rem;
-      border-radius: 6px;
-      border: none;
-      font-size: .8rem;
-      cursor: pointer;
-      background: #555;
-      color: #fff;
-    }
-
-    .btn-copy:hover {
-      background: #333;
-    }
-
-    .upload-status {
-      font-size: .8rem;
-      color: #444;
-      margin-top: .25rem;
-    }
-
   </style>
 </head>
 <body>
@@ -372,25 +324,11 @@
         <button type="submit" class="btn-main">ارسال واتساپ</button>
         <button type="button" id="download-page1" class="btn-secondary">دانلود صفحه ۱ (PNG)</button>
         <button type="button" id="download-page2" class="btn-secondary">دانلود صفحه ۲ (PNG)</button>
-        <button type="button" id="upload-image-btn" class="btn-secondary">آپلود تصویر دانلود شده</button>
-
-        <div id="upload-status" class="upload-status"></div>
-        <div id="upload-result" class="upload-result">
-          <div>لینک تصویر آپلودشده:</div>
-          <a href="#" id="upload-link" target="_blank"></a>
-          <div class="upload-actions">
-            <button type="button" id="copy-link-btn" class="btn-copy">کپی لینک</button>
-          </div>
-        </div>
 
         <p class="note">
           برای کیفیت بهتر، بعد از دانلود هر صفحه، آن را از گالری به صورت <strong>Document</strong> در واتساپ ارسال کنید.
-          برای آرشیو حرفه‌ای‌تر، می‌توانید تصویر فرم را با دکمه «آپلود تصویر دانلود شده» آپلود کرده و لینک آن را ذخیره کنید.
         </p>
       </div>
-
-      <!-- input مخفی برای انتخاب فایل -->
-      <input type="file" id="upload-file-input" accept="image/*" style="display:none">
 
     </form>
   </div>
@@ -430,10 +368,11 @@
       msg += '✅ کاربر شرایط را مطالعه کرده و تیک‌های تأیید را پذیرفته است.\\n';
       msg += 'یادآوری: لطفاً تصویر کارت ملی و در صورت امکان تصاویر صفحات فرم را نیز ارسال نمایید.';
 
-      // شماره واتساپ خودت رو اینجا بذار (بدون صفر، با 98)
-      const shopNumber = '989123456789'; // مثلا 09123456789
-      const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
+      // ⚠️ اینجا شماره واتساپ خودت رو بذار (بدون صفر، با 98)
+      // مثال: 09123456789 → 989123456789
+      const shopNumber = '989123456789';
 
+      const waUrl = 'https://wa.me/' + shopNumber + '?text=' + encodeURIComponent(msg);
       window.open(waUrl, '_blank');
     });
 
@@ -479,76 +418,6 @@
 
     document.getElementById('download-page2').addEventListener('click', function () {
       downloadPageAsPNG('page2', 'mimstore-form-page2.png');
-    });
-
-    // آپلود تصویر دانلود شده به imgbb
-    const uploadBtn = document.getElementById('upload-image-btn');
-    const uploadInput = document.getElementById('upload-file-input');
-    const uploadStatus = document.getElementById('upload-status');
-    const uploadResult = document.getElementById('upload-result');
-    const uploadLink = document.getElementById('upload-link');
-    const copyLinkBtn = document.getElementById('copy-link-btn');
-
-    const IMGBB_API_KEY = '76fd52ef7a34ccf3b5cdd65790b8966a';
-
-    uploadBtn.addEventListener('click', function () {
-      uploadInput.click();
-    });
-
-    uploadInput.addEventListener('change', function () {
-      const file = this.files[0];
-      if (!file) return;
-
-      uploadStatus.textContent = 'در حال آپلود تصویر... لطفاً صبر کنید.';
-      uploadResult.style.display = 'none';
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const base64Data = e.target.result.split(',')[1];
-
-        const formData = new FormData();
-        formData.append('key', IMGBB_API_KEY);
-        formData.append('image', base64Data);
-
-        fetch('https://api.imgbb.com/1/upload', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(json => {
-            if (json && json.success) {
-              const url = json.data.url;
-              uploadLink.href = url;
-              uploadLink.textContent = url;
-              uploadResult.style.display = 'block';
-              uploadStatus.textContent = 'آپلود با موفقیت انجام شد ✔ لینک بالا را ذخیره یا در واتساپ ارسال کنید.';
-            } else {
-              console.error(json);
-              uploadStatus.textContent = 'خطا در آپلود تصویر. لطفاً دوباره تلاش کنید.';
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            uploadStatus.textContent = 'در برقراری ارتباط مشکلی پیش آمد. لطفاً اتصال اینترنت را بررسی کنید.';
-          })
-          .finally(() => {
-            uploadInput.value = '';
-          });
-      };
-      reader.readAsDataURL(file);
-    });
-
-    copyLinkBtn.addEventListener('click', function () {
-      const url = uploadLink.textContent.trim();
-      if (!url) return;
-
-      navigator.clipboard.writeText(url)
-        .then(() => {
-          alert('لینک تصویر در کلیپ‌بورد کپی شد ✅');
-        })
-        .catch(() => {
-          alert('نتوانستم لینک را کپی کنم. لطفاً به صورت دستی کپی کنید.');
-        });
     });
   </script>
 </body>
