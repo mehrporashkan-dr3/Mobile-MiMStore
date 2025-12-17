@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>قرارداد فروش اقساطی | Mobile MiMStore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body{
+      font-family: Tahoma, sans-serif;
+      margin:0;
+      padding:0;
+      background:#f5f5f5;
+      direction:rtl;
+      line-height:1.8;
+    }
+    .wrap{
+      max-width:920px;
+      margin:20px auto;
+      padding:10px;
+    }
+    .card{
+      background:#fff;
+      border-radius:10px;
+      padding:18px;
+      margin-bottom:15px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.12);
+    }
+    h1,h2,h3{
+      margin:0 0 10px 0;
+      font-size:17px;
+      font-weight:bold;
+    }
+    h1{text-align:center;font-size:19px;}
+
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .field{
+      flex:1;
+      min-width:200px;
+    }
+    label{
+      display:block;
+      font-size:13px;
+      margin-bottom:4px;
+      font-weight:bold;
+    }
+    input,select,textarea{
+      width:100%;
+      padding:6px 8px;
+      font-size:13px;
+      border-radius:7px;
+      border:1px solid #ccc;
+      box-sizing:border-box;
+    }
+    textarea{min-height:60px;}
+
+    .chk-label{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      margin-bottom:3px;
+    }
+    .chk-label input{
+      width:14px;
+      height:14px;
+    }
+
+    .sec-title{
+      font-size:14px;
+      font-weight:bold;
+      padding-bottom:4px;
+      border-bottom:1px solid #d0d0d0;
+      margin-top:15px;
+    }
+
+    button{
+      padding:10px 16px;
+      border:none;
+      border-radius:8px;
+      font-size:14px;
+      cursor:pointer;
+    }
+    #btnCalc{width:100%;background:#c62828;color:#fff;}
+    #btnCalcByInst{width:100%;background:#ef6c00;color:#fff;margin-top:6px;}
+    #btnApply{width:100%;background:#00796b;color:#fff;margin-top:8px;}
+    #btnPrint{background:#283593;color:#fff;margin-top:10px;width:180px;}
+
+    .result{
+      display:none;
+      white-space:pre-line;
+      background:#fafafa;
+      border:1px solid #ddd;
+      padding:12px;
+      border-radius:8px;
+      font-size:13px;
+      margin-top:15px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:12px;
+    }
+    th,td{
+      padding:6px;
+      border:1px solid #ccc;
+      text-align:center;
+    }
+
+    .tiny{
+      font-size:11px;
+      color:#777;
+      margin-top:10px;
+    }
+
+    @media print{
+      #calculator, #btnPrint {display:none;}
+      body{background:#fff;}
+      .card{box-shadow:none;margin:0;padding:10px;}
+    }
+  </style>
+
+</head>
+
+<body>
+<div class="wrap">
+
+  <!-- ====================== -->
+  <!--   بخش ۰: ماشین حساب    -->
+  <!-- ====================== -->
+
+  <div class="card" id="calculator">
+    <h1>ماشین‌حساب اقساط | موبایل میم استور</h1>
+
+    <div class="row">
+      <div class="field">
+        <label>قیمت نقدی کالا (تومان)</label>
+        <input id="cash" type="text">
+      </div>
+      <div class="field">
+        <label>حاشیه سود روی قیمت (%)</label>
+        <select id="margin">
+          <option value="0">بدون حاشیه سود</option>
+          <option value="5">۵٪</option>
+          <option value="6">۶٪</option>
+          <option value="7">۷٪</option>
+          <option value="8">۸٪</option>
+          <option value="9">۹٪</option>
+          <option value="10">۱۰٪</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>نوع پیش‌پرداخت</label>
+        <select id="downMode">
+          <option value="percent">درصدی</option>
+          <option value="amount">مبلغ ثابت</option>
+          <option value="none">بدون پیش‌پرداخت</option>
+        </select>
+      </div>
+
+      <div class="field" id="percentBox">
+        <label>درصد پیش‌پرداخت</label>
+        <select id="downPercent">
+          <option value="10">۱۰٪</option>
+          <option value="20">۲۰٪</option>
+          <option value="30" selected>۳۰٪</option>
+          <option value="40">۴۰٪</option>
+          <option value="50">۵۰٪</option>
+          <option value="60">۶۰٪</option>
+          <option value="70">۷۰٪</option>
+          <option value="80">۸۰٪</option>
+        </select>
+      </div>
+
+      <div class="field" id="amountBox" style="display:none;">
+        <label>مبلغ پیش‌پرداخت (تومان)</label>
+        <input id="downAmount" type="text">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>تعداد اقساط (ماه)</label>
+        <select id="months">
+          <option value="1">۱ ماهه</option>
+          <option value="2">۲ ماهه</option>
+          <option value="3">۳ ماهه</option>
+          <option value="4">۴ ماهه</option>
+          <option value="5">۵ ماهه</option>
+          <option value="6" selected>۶ ماهه</option>
+          <option value="7">۷ ماهه</option>
+          <option value="8">۸ ماهه</option>
+          <option value="9">۹ ماهه</option>
+          <option value="10">۱۰ ماهه</option>
+          <option value="11">۱۱ ماهه</option>
+          <option value="12">۱۲ ماهه</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>سود ماهانه (٪)</label>
+        <select id="rate">
+          <option value="3">۳٪</option>
+          <option value="4">۴٪</option>
+          <option value="5" selected>۵٪</option>
+          <option value="6">۶٪</option>
+          <option value="7">۷٪</option>
+          <option value="8">۸٪</option>
+          <option value="9">۹٪</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- فیلد جدید برای قسط مدنظر مشتری -->
+    <div class="row">
+      <div class="field">
+        <label>حداکثر قسط موردنظر مشتری (تومان)</label>
+        <input id="maxInst" type="text" placeholder="مثال: 10,000,000">
+      </div>
+      <div class="field" style="font-size:12px;margin-top:24px;">
+        حداکثر مدت اقساط در این حالت: ۶ ماه
+      </div>
+    </div>
+
+    <button id="btnCalc" type="button" onclick="calc()">
+      محاسبه اقساط (بر اساس تعداد ماه)
+    </button>
+
+    <button id="btnCalcByInst" type="button" onclick="calcByInst()">
+      محاسبه بر اساس قسط موردنظر مشتری (حداکثر ۶ ماه)
+    </button>
+
+    <button id="btnApply" type="button" onclick="applyToContract()">
+      انتقال این محاسبه به فرم قرارداد
+    </button>
+
+    <div id="result" class="result"></div>
+
+    <div class="tiny">
+      * جریمه دیرکرد هر قسط، روزانه ۲٪ مبلغ همان قسط معوق است.<br>
+      * اطلاعات محاسبه‌شده پس از تأیید، در فرم قرارداد درج می‌شود.
+    </div>
+  </div>
+
+  <!-- ====================== -->
+  <!--   بخش ۱: قرارداد اصلی   -->
+  <!-- ====================== -->
+
+  <div class="card" id="contract">
+    <h1>قرارداد فروش اقساطی | فروشگاه موبایل میم استور</h1>
+
+    <div class="row">
+      <div class="field">
+        <label>تاریخ قرارداد (شمسی)</label>
+        <input id="c_date" readonly>
+      </div>
+      <div class="field">
+        <label>شماره قرارداد</label>
+        <input id="c_number" placeholder="مثال: 1403-001">
+      </div>
+    </div>
+
+    <!-- بخش مشخصات خریدار -->
+    <div class="sec-title">بخش ۱ - مشخصات خریدار</div>
+    <div class="row">
+      <div class="field">
+        <label>نام و نام خانوادگی خریدار</label>
+        <input id="buyer_name">
+      </div>
+      <div class="field">
+        <label>کد ملی</label>
+        <input id="buyer_nid">
+      </div>
+      <div class="field">
+        <label>شماره تماس</label>
+        <input id="buyer_mobile">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>آدرس کامل</label>
+        <input id="buyer_addr">
+      </div>
+      <div class="field">
+        <label>شغل / محل کار</label>
+        <input id="buyer_job">
+      </div>
+    </div>
+
+    <!-- بخش مشخصات کالا -->
+    <div class="sec-title">بخش ۲ - مشخصات کالا</div>
+
+    <div class="row">
+      <div class="field">
+        <label>مدل کالا</label>
+        <input id="phone_model">
+      </div>
+      <div class="field">
+        <label>رنگ</label>
+        <input id="phone_color">
+      </div>
+      <div class="field">
+        <label>حافظه / ظرفیت</label>
+        <input id="phone_ram">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>IMEI (در صورت وجود)</label>
+        <input id="phone_imei">
+      </div>
+      <div class="field">
+        <label>تعداد</label>
+        <input id="phone_qty" value="1">
+      </div>
+    </div>
+
+    <!-- وضعیت کالا -->
+    <label style="font-size:13px;font-weight:bold;margin-top:12px;">وضعیت کالا (تیک انتخابی توسط خریدار)</label>
+
+    <div class="row">
+      <div class="field">
+        <label class="chk-label"><input type="checkbox">آکبند پلمپ</label>
+        <label class="chk-label"><input type="checkbox">نو بدون پلمپ</label>
+        <label class="chk-label"><input type="checkbox">کارکرده - تست کامل شده</label>
+        <label class="chk-label"><input type="checkbox">دسته دوم - با اطلاع خریدار</label>
+      </div>
+
+      <div class="field">
+        <label class="chk-label"><input type="checkbox">دارای گارانتی شرکتی</label>
+        <label class="chk-label"><input type="checkbox">بدون گارانتی</label>
+        <label class="chk-label"><input type="checkbox">گارانتی فروشگاه (۷ روز مهلت تست)</label>
+      </div>
+
+      <div class="field">
+        <label class="chk-label"><input type="checkbox">رجیستر کامل و قانونی</label>
+        <label class="chk-label"><input type="checkbox">رجیستر زمان تحویل</label>
+        <label class="chk-label"><input type="checkbox">بدون رجیستر (مسئولیت کامل با خریدار)</label>
+      </div>
+    </div>
+
+    <div class="tiny">
+      خریدار اقرار می‌کند کالا را قبل از تحویل به‌طور کامل تست کرده،  
+      از سلامت ظاهری و فنی، رجیستری و گارانتی اطلاع کامل داشته  
+      و پس از خروج از فروشگاه هیچگونه ادعا یا شکایتی درباره خرابی،  
+      رجیستر، افت قیمت، مشکلات سخت‌افزاری یا نرم‌افزاری نخواهد داشت.
+    </div>
+
+    <!-- بخش مبلغ فروش و اقساط -->
+    <div class="sec-title">بخش ۳ - مبلغ فروش و شرایط اقساط</div>
+
+    <div class="row">
+      <div class="field">
+        <label>قیمت فروش اقساطی کالا (جمع کل پرداختی خریدار - تومان)</label>
+        <input id="c_total_price">
+      </div>
+      <div class="field">
+        <label>مبلغ پیش‌پرداخت (تومان)</label>
+        <input id="c_down">
+      </div>
+      <div class="field">
+        <label>مانده قابل تقسیط (تومان)</label>
+        <input id="c_debt">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>تعداد اقساط (ماه)</label>
+        <input id="c_months">
+      </div>
+      <div class="field">
+        <label>مبلغ هر قسط (تومان)</label>
+        <input id="c_inst_amount">
+      </div>
+      <div class="field">
+        <label>جمع کل اقساط (تومان)</label>
+        <input id="c_inst_sum">
+      </div>
+    </div>
+
+    <div class="tiny">
+      مبنای محاسبه قیمت اقساطی، قیمت روز کالا در زمان صدور فاکتور نهایی و رزرو کالا در فروشگاه است.  
+      در صورت تغییر قیمت بازار تا قبل از صدور فاکتور، طرفین موظف به توافق مجدد یا انصراف از معامله بوده  
+      و هیچ‌گونه تعهدی برای طرف دیگر ایجاد نخواهد شد.
+    </div>
+
+    <!-- بخش تقویم اقساط -->
+    <div class="sec-title">بخش ۴ - تقویم اقساط</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>شماره قسط</th>
+          <th>تاریخ سررسید (شمسی)</th>
+          <th>مبلغ قسط (تومان)</th>
+          <th>توضیحات</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody">
+      </tbody>
+    </table>
+
+    <div class="tiny">
+      جریمه تأخیر هر قسط، روزانه ۲٪ مبلغ همان قسط معوق است.  
+      فروشگاه مجاز است در صورت تأخیر، علاوه بر جریمه دیرکرد، برای وصول مطالبات از تضامین استفاده نماید.
+
+      <p id="late-fee-result" style="margin-top:6px; font-size:0.86rem; color:#b71c1c; font-weight:bold;">
+        خسارت تأخیر روزانه بر اساس مبلغ هر قسط: — تومان
+      </p>
+      <p id="late-fee-monthly" style="margin-top:3px; font-size:0.82rem; color:#d84315;">
+        (خسارت ماهانه‌ی تقریبی تأخیر: — تومان)
+      </p>
+    </div>
+
+    <!-- تضامین پرداخت: چک / طلا -->
+    <div class="sec-title">بخش ۵ - تضامین پرداخت (چک یا طلا)</div>
+
+    <label style="font-size:13px;font-weight:bold;">نوع ضمانت انتخابی:</label>
+    <div class="row">
+      <div class="field">
+        <label class="chk-label"><input type="checkbox" id="g_check">چک صیادی بنفش</label>
+        <label class="chk-label"><input type="checkbox" id="g_gold">طلا (وثیقه اجرای تعهدات)</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>مبلغ چک (تومان)</label>
+        <input id="c_cheque_amount">
+      </div>
+      <div class="field">
+        <label>تاریخ چک (همان تاریخ قرارداد)</label>
+        <input id="c_cheque_date">
+      </div>
+      <div class="field">
+        <label>نام بانک / شعبه</label>
+        <input id="c_cheque_bank">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>شماره صیادی / سریال چک</label>
+        <input id="c_cheque_no">
+      </div>
+      <div class="field">
+        <label>در وجه</label>
+        <input id="c_cheque_payee" value="فروشگاه موبایل میم استور">
+      </div>
+    </div>
+
+    <div class="tiny">
+      خریدار اقرار می‌نماید چک فوق را در وجه فروشگاه موبایل میم استور بابت ثمن معامله، اقساط، حاشیه سود و ریسک افزایش قیمت صادر نموده  
+      و تا زمان تسویه کامل بدهی، حق هرگونه ادعا مبنی بر ضمانتی بودن چک را از خود سلب و ساقط می‌نماید.
+    </div>
+
+    <div class="sec-title">اطلاعات طلا (در صورت انتخاب ضمانت طلا)</div>
+    <div class="row">
+      <div class="field">
+        <label>وزن تقریبی (گرم)</label>
+        <input id="gold_weight">
+      </div>
+      <div class="field">
+        <label>ارزش روز تقریبی (تومان)</label>
+        <input id="gold_value">
+      </div>
+      <div class="field">
+        <label>نوع طلا / توضیحات</label>
+        <input id="gold_desc">
+      </div>
+    </div>
+
+    <div class="tiny">
+      خریدار اقرار می‌کند طلای فوق را به عنوان وثیقه اجرای تعهدات خود تا زمان تسویه کامل اقساط در اختیار فروشگاه قرار داده است  
+      و فروشگاه در صورت عدم پرداخت هر قسط بیش از ۷ روز، مجاز است از طریق مراجع قانونی نسبت به فروش طلا و برداشت مطالبات خود اقدام نماید.
+    </div>
+
+    <!-- بخش ۵-۱ : مشخصات ضامن مدل A -->
+    <div class="sec-title">بخش ۵-۱ - مشخصات و تعهد ضامن (در صورت وجود)</div>
+
+    <div class="row">
+      <div class="field">
+        <label>نام و نام خانوادگی ضامن</label>
+        <input id="g_name">
+      </div>
+      <div class="field">
+        <label>کد ملی ضامن</label>
+        <input id="g_nid">
+      </div>
+      <div class="field">
+        <label>شماره تماس ضامن</label>
+        <input id="g_mobile">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>آدرس کامل ضامن</label>
+        <input id="g_addr">
+      </div>
+      <div class="field">
+        <label>نسبت ضامن با خریدار</label>
+        <input id="g_relation">
+      </div>
+    </div>
+
+    <p style="font-size:11px;line-height:1.9;">
+      اینجانب ضامن فوق، با اطلاع کامل از مفاد این قرارداد، اقرار و تعهد می‌نمایم که نسبت به کلیه بدهی‌ها، اقساط، جرایم تأخیر،  
+      هزینه‌های اجرای تعهدات، ریسک افزایش قیمت و کلیه مفاد این قرارداد، به همراه خریدار <strong>مسئولیت تضامنی</strong> دارم.  
+      فروشگاه می‌تواند در صورت عدم پرداخت به‌موقع اقساط توسط خریدار، بدون نیاز به اخطار مجدد، برای وصول تمام یا بخشی از مطالبات خود  
+      مستقیماً علیه اینجانب (ضامن) نیز اقدام قانونی و قضایی معمول نماید.  
+      ضامن حق هرگونه ادعا مبنی بر «صرفاً ضامن بودن» یا عدم اطلاع از مفاد قرارداد را از خود سلب و ساقط می‌نماید.
+    </p>
+
+    <!-- مدارک -->
+    <div class="sec-title">بخش ۶ - مدارک هویتی و مالکیت</div>
+    <ul style="font-size:12px;margin-top:6px;">
+      <li>اصل و تصویر کارت ملی و شناسنامه خریدار (و ضامن در صورت وجود).</li>
+      <li>کارت بانکی به نام خریدار جهت پرداخت اقساط.</li>
+      <li>
+        کارتن اصلی گوشی و مدارک مالکیت آن
+        (از جمله جعبه دارای شماره IMEI / برگه رجیستری و مدارک مشابه)
+        تا زمان تسویه کامل اقساط نزد فروشگاه موبایل میم استور
+        به عنوان امانت و وثیقه اجرای تعهدات نگهداری می‌شود.
+      </li>
+    </ul>
+
+    <!-- هزینه خدمات -->
+    <div class="sec-title">بخش ۷ - هزینه خدمات اداری و استعلام اعتباری</div>
+    <p style="font-size:11px;line-height:1.9;">
+      خریدار اقرار می‌نماید مبلغ <strong>۲۵۰,۰۰۰ تومان</strong> را بابت خدمات بررسی مدارک، تشکیل پرونده،  
+      استعلام اولیه هویتی و اعتباری، رتبه‌بندی داخلی فروشگاه و بررسی ضمانت‌ها به فروشگاه پرداخت نموده است.  
+      این مبلغ صرفاً بابت خدمات اداری و پردازشی بوده و ارتباطی با نتیجه نهایی پرونده (تأیید یا رد اعتبار) ندارد  
+      و <strong>در هیچ شرایطی قابل استرداد نیست</strong>. فروشگاه حداکثر تا ۳ مرتبه استعلام و بررسی را با همین مبلغ انجام می‌دهد؛  
+      استعلام‌های بعدی در صورت درخواست مجدد خریدار، مشمول هزینه جداگانه به مبلغ ۱۰۰,۰۰۰ تومان برای هر بار استعلام خواهد بود.  
+      خریدار حق هرگونه اعتراض و مطالبه استرداد این مبالغ را از خود سلب و ساقط می‌نماید.
+    </p>
+
+    <!-- سایر شروط -->
+    <div class="sec-title">بخش ۸ - سایر شروط و توافقات</div>
+    <ul style="font-size:11px;line-height:1.9;margin-top:6px;">
+      <li>
+        هرگونه آسیب فیزیکی (ضربه، شکستگی، خراش، آب‌خوردگی، سوختگی)،  
+        مشکلات نرم‌افزاری و سخت‌افزاری که پس از تحویل کالا به خریدار ایجاد شود،  
+        کاملاً بر عهده خریدار بوده و فروشگاه هیچ‌گونه مسئولیتی در قبال تعمیر، تعویض یا جبران خسارت نخواهد داشت.
+      </li>
+      <li>
+        این قرارداد در دو نسخه متحدالمتن تنظیم شده که هر نسخه حکم واحد را دارد و برای طرفین لازم‌الاجرا است.
+      </li>
+    </ul>
+
+    <!-- تأیید نهایی و امضاها -->
+    <div class="sec-title">بخش ۹ - تأیید نهایی خریدار، ضامن و فروشنده</div>
+
+    <p style="font-size:11px;line-height:1.9;">
+      خریدار و ضامن (در صورت وجود)، با مطالعه دقیق مفاد این قرارداد اقرار می‌نمایند که:  
+      کلیه اطلاعات درج‌شده صحیح است، شرایط اقساط، مبلغ هر قسط، تعداد اقساط، جریمه دیرکرد،  
+      نوع و مبلغ ضمانت‌ها (چک یا طلا)، وضعیت کالا، گارانتی و نحوه استفاده از تضامین را به‌طور کامل فهمیده‌اند  
+      و با اراده کامل و بدون اجبار این قرارداد را امضا کرده‌اند و هیچ‌گونه ادعایی مبنی بر ناآگاهی  
+      یا صرفاً «ضامن بودن» نسبت به مفاد قرارداد نخواهند داشت.
+    </p>
+
+    <div class="row">
+      <div class="field">
+        <label>امضای خریدار</label>
+        <div style="border:1px solid #ccc;height:60px;"></div>
+      </div>
+      <div class="field">
+        <label>امضای ضامن (در صورت وجود)</label>
+        <div style="border:1px solid #ccc;height:60px;"></div>
+      </div>
+      <div class="field">
+        <label>امضای فروشنده / نماینده فروشگاه</label>
+        <div style="border:1px solid #ccc;height:60px;"></div>
+      </div>
+    </div>
+
+    <div class="tiny">
+      آدرس فروشگاه: خیابان دانشگاه، کوچه دانشگاه ۲، پاساژ تجاری علاالدین، طبقه همکف، پلاک ۱۵<br>
+      فروشگاه موبایل میم استور - تلفن / واتساپ:
+      <span style="direction:ltr; unicode-bidi:bidi-override;">09999926021</span>
+    </div>
+
+    <button id="btnPrint" onclick="window.print()">چاپ قرارداد</button>
+
+  </div> <!-- پایان کارت قرارداد -->
+
+</div> <!-- پایان wrap -->
+
+<!-- ====================== -->
+<!--      اسکریپت‌ها        -->
+<!-- ====================== -->
+<script>
+  function clean(x){
+    return Number(String(x).replace(/[^\d]/g,''));
+  }
+  function comma(n){
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  }
+
+  // فرمت قیمتی ورودی‌های ماشین حساب
+  document.getElementById("cash").addEventListener("input", e=>{
+    e.target.value = comma(clean(e.target.value));
+  });
+  document.getElementById("downAmount").addEventListener("input", e=>{
+    e.target.value = comma(clean(e.target.value));
+  });
+  document.getElementById("maxInst").addEventListener("input", e=>{
+    e.target.value = comma(clean(e.target.value));
+  });
+
+  document.getElementById("downMode").addEventListener("change", e=>{
+    let mode = e.target.value;
+    document.getElementById("percentBox").style.display = (mode==="percent")?"block":"none";
+    document.getElementById("amountBox").style.display  = (mode==="amount")?"block":"none";
+  });
+
+  let lastCalc = null;
+
+  // تابع کمکی برای ساخت یک پلن
+  function buildPlan(cash, price, down, debt, months, rate){
+    let interest        = debt * rate * months;
+    let interestMonthly = interest / months;
+    let total           = debt + interest;
+    let monthly         = total / months;
+    let penalty         = monthly * 0.02;
+    let grand           = total + down;
+    let chequeAmount    = grand;
+
+    return {
+      cash,
+      price,
+      down,
+      debt,
+      interest,
+      interestMonthly,
+      total,
+      monthly,
+      months,
+      rate,
+      penalty,
+      grand,
+      chequeAmount
+    };
+  }
+
+  // حالت عادی: محاسبه بر اساس تعداد اقساط انتخابی
+  function calc(){
+    let cash   = clean(document.getElementById("cash").value);
+    let margin = Number(document.getElementById("margin").value) / 100;
+    let mode   = document.getElementById("downMode").value;
+    let months = Number(document.getElementById("months").value);
+    let rate   = Number(document.getElementById("rate").value) / 100;
+
+    if (!cash) {
+      alert("لطفاً قیمت نقدی کالا را وارد کنید.");
+      return;
+    }
+
+    let price = cash * (1 + margin);
+    let down  = 0;
+
+    if (mode === "percent") {
+      let p = Number(document.getElementById("downPercent").value) || 0;
+      down = price * (p / 100);
+    } else if (mode === "amount") {
+      down = clean(document.getElementById("downAmount").value);
+    } else {
+      down = 0;
+    }
+
+    let debt = price - down;
+    if (debt <= 0) {
+      alert("پیش‌پرداخت نمی‌تواند بیشتر از قیمت اقساطی باشد.");
+      return;
+    }
+
+    let plan = buildPlan(cash, price, down, debt, months, rate);
+    lastCalc = plan;
+
+    let res = document.getElementById("result");
+    res.style.display = "block";
+    res.textContent =
+      "محاسبه بر اساس تعداد اقساط انتخابی\n\n" +
+      "قیمت نقدی: " + comma(plan.cash) + " تومان\n" +
+      "قیمت پایه با حاشیه سود: " + comma(Math.round(plan.price)) + " تومان\n\n" +
+      "پیش‌پرداخت: " + comma(Math.round(plan.down)) + " تومان\n" +
+      "مانده قابل تقسیط: " + comma(Math.round(plan.debt)) + " تومان\n\n" +
+      "تعداد اقساط: " + plan.months + " ماه\n" +
+      "سود ماهانه (درصد): " + (plan.rate * 100).toFixed(0) + "٪\n" +
+      "سود کل دوره: " + comma(Math.round(plan.interest)) + " تومان\n" +
+      "سود هر ماه (تقریبی): " + comma(Math.round(plan.interestMonthly)) + " تومان\n\n" +
+      "مبلغ هر قسط: " + comma(Math.round(plan.monthly)) + " تومان\n" +
+      "جمع کل اقساط: " + comma(Math.round(plan.total)) + " تومان\n\n" +
+      "جمع کل پرداختی (پیش‌پرداخت + اقساط): " + comma(Math.round(plan.grand)) + " تومان\n" +
+      "مبلغ چک پیشنهادی: " + comma(Math.round(plan.chequeAmount)) + " تومان\n" +
+      "جریمه دیرکرد روزانه هر قسط: " + comma(Math.round(plan.penalty)) + " تومان";
+  }
+
+  // حالت جدید: محاسبه بر اساس قسط مدنظر مشتری با سقف ۶ ماه
+  function calcByInst(){
+    let cash   = clean(document.getElementById("cash").value);
+    let margin = Number(document.getElementById("margin").value) / 100;
+    let mode   = document.getElementById("downMode").value;
+    let rate   = Number(document.getElementById("rate").value) / 100;
+    let desired = clean(document.getElementById("maxInst").value);
+
+    if (!cash) {
+      alert("لطفاً قیمت نقدی کالا را وارد کنید.");
+      return;
+    }
+    if (!desired) {
+      alert("لطفاً حداکثر قسط موردنظر مشتری را وارد کنید.");
+      return;
+    }
+
+    let price = cash * (1 + margin);
+    let down  = 0;
+
+    if (mode === "percent") {
+      let p = Number(document.getElementById("downPercent").value) || 0;
+      down = price * (p / 100);
+    } else if (mode === "amount") {
+      down = clean(document.getElementById("downAmount").value);
+    } else {
+      down = 0;
+    }
+
+    let debt = price - down;
+    if (debt <= 0) {
+      alert("پیش‌پرداخت نمی‌تواند بیشتر از قیمت اقساطی باشد.");
+      return;
+    }
+
+    let maxMonths = 6;
+    let best = null;
+
+    // جست‌وجو بین ۱ تا ۶ ماه
+    for (let m = 1; m <= maxMonths; m++) {
+      let plan = buildPlan(cash, price, down, debt, m, rate);
+
+      if (plan.monthly <= desired) {
+        if (!best || plan.monthly > best.monthly) {
+          best = plan;
+        }
+      }
+    }
+
+    let res = document.getElementById("result");
+    res.style.display = "block";
+
+    if (!best) {
+      // حتی با ۶ ماه هم قسط از عدد مدنظر بالاتره
+      let fallback = buildPlan(cash, price, down, debt, maxMonths, rate);
+      lastCalc = fallback;
+
+      res.textContent =
+        "نتیجه بر اساس قسط مدنظر مشتری\n\n" +
+        "با این قیمت، پیش‌پرداخت و سقف ۶ ماه:\n" +
+        "قسط ماهانه کمتر از " + comma(desired) + " تومان به‌دست نمی‌آید.\n" +
+        "حداقل قسط ممکن با ۶ ماه: " + comma(Math.round(fallback.monthly)) + " تومان.\n\n" +
+        "مابقی جزئیات محاسبه:\n\n" +
+        "قیمت نقدی: " + comma(fallback.cash) + " تومان\n" +
+        "قیمت پایه با حاشیه سود: " + comma(Math.round(fallback.price)) + " تومان\n\n" +
+        "پیش‌پرداخت: " + comma(Math.round(fallback.down)) + " تومان\n" +
+        "مانده قابل تقسیط: " + comma(Math.round(fallback.debt)) + " تومان\n\n" +
+        "تعداد اقساط: " + fallback.months + " ماه\n" +
+        "سود ماهانه (درصد): " + (fallback.rate * 100).toFixed(0) + "٪\n" +
+        "سود کل دوره: " + comma(Math.round(fallback.interest)) + " تومان\n" +
+        "سود هر ماه (تقریبی): " + comma(Math.round(fallback.interestMonthly)) + " تومان\n\n" +
+        "مبلغ هر قسط: " + comma(Math.round(fallback.monthly)) + " تومان\n" +
+        "جمع کل اقساط: " + comma(Math.round(fallback.total)) + " تومان\n\n" +
+        "جمع کل پرداختی (پیش‌پرداخت + اقساط): " + comma(Math.round(fallback.grand)) + " تومان\n" +
+        "مبلغ چک پیشنهادی: " + comma(Math.round(fallback.chequeAmount)) + " تومان\n" +
+        "جریمه دیرکرد روزانه هر قسط: " + comma(Math.round(fallback.penalty)) + " تومان";
+    } else {
+      // پلن مناسب پیدا شد
+      lastCalc = best;
+
+      res.textContent =
+        "پلن پیشنهادی بر اساس حداکثر قسط " + comma(desired) + " تومان:\n\n" +
+        "تعداد اقساط: " + best.months + " ماه\n" +
+        "مبلغ هر قسط: " + comma(Math.round(best.monthly)) + " تومان\n\n" +
+        "جزئیات کامل محاسبه:\n\n" +
+        "قیمت نقدی: " + comma(best.cash) + " تومان\n" +
+        "قیمت پایه با حاشیه سود: " + comma(Math.round(best.price)) + " تومان\n\n" +
+        "پیش‌پرداخت: " + comma(Math.round(best.down)) + " تومان\n" +
+        "مانده قابل تقسیط: " + comma(Math.round(best.debt)) + " تومان\n\n" +
+        "سود ماهانه (درصد): " + (best.rate * 100).toFixed(0) + "٪\n" +
+        "سود کل دوره: " + comma(Math.round(best.interest)) + " تومان\n" +
+        "سود هر ماه (تقریبی): " + comma(Math.round(best.interestMonthly)) + " تومان\n\n" +
+        "جمع کل اقساط: " + comma(Math.round(best.total)) + " تومان\n" +
+        "جمع کل پرداختی (پیش‌پرداخت + اقساط): " + comma(Math.round(best.grand)) + " تومان\n" +
+        "مبلغ چک پیشنهادی: " + comma(Math.round(best.chequeAmount)) + " تومان\n" +
+        "جریمه دیرکرد روزانه هر قسط: " + comma(Math.round(best.penalty)) + " تومان";
+    }
+  }
+
+  // تبدیل میلادی به جلالی
+  function gregorian_to_jalali(gy, gm, gd){
+    let g_d_m=[0,31,59,90,120,151,181,212,243,273,304,334];
+    let jy=(gy<=1600)?0:979;
+    gy-=(gy<=1600)?621:1600;
+    let gy2=(gm>2)?(gy+1):gy;
+    let days=(365*gy) + parseInt((gy2+3)/4) - parseInt((gy2+99)/100) +
+              parseInt((gy2+399)/400) - 80 + gd + g_d_m[gm-1];
+    jy+=33*parseInt(days/12053);
+    days%=12053;
+    jy+=4*parseInt(days/1461);
+    days%=1461;
+    if(days>365){
+      jy+=parseInt((days-1)/365);
+      days=(days-1)%365;
+    }
+    let jm=(days<186)?1+parseInt(days/31):7+parseInt((days-186)/30);
+    let jd=1+((days<186)?(days%31):((days-186)%30));
+    return [jy,jm,jd];
+  }
+
+  function pad(n){ return (n<10?"0":"")+n; }
+
+  function todayJalaliString(){
+    let d = new Date();
+    let gy = d.getFullYear();
+    let gm = d.getMonth()+1;
+    let gd = d.getDate();
+    let j  = gregorian_to_jalali(gy,gm,gd);
+    return j[0]+"/"+pad(j[1])+"/"+pad(j[2]);
+  }
+
+  function addMonthsJalali(jy,jm,jd,add){
+    jm += add;
+    while(jm>12){ jm-=12; jy++; }
+    return jy+"/"+pad(jm)+"/"+pad(jd);
+  }
+
+  function buildSchedule(months, monthly){
+    let tbody = document.getElementById("scheduleBody");
+    tbody.innerHTML = "";
+
+    let baseDateStr = document.getElementById("c_date").value || todayJalaliString();
+    let parts = baseDateStr.split("/");
+    let jy = parseInt(parts[0]) || 1403;
+    let jm = parseInt(parts[1]) || 1;
+    let jd = parseInt(parts[2]) || 1;
+
+    for(let i=0;i<months;i++){
+      let tr  = document.createElement("tr");
+      let td1 = document.createElement("td");
+      let td2 = document.createElement("td");
+      let td3 = document.createElement("td");
+      let td4 = document.createElement("td");
+
+      td1.textContent = (i+1);
+      td2.textContent = addMonthsJalali(jy,jm,jd,i);
+      td3.textContent = comma(Math.round(monthly));
+      td4.textContent = "";
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+      tbody.appendChild(tr);
+    }
+  }
+
+  function applyToContract(){
+    if(!lastCalc){
+      alert("ابتدا روی «محاسبه اقساط» کلیک کنید.");
+      return;
+    }
+    let c = lastCalc;
+
+    document.getElementById("c_total_price").value = comma(Math.round(c.grand));
+    document.getElementById("c_down").value        = comma(Math.round(c.down));
+    document.getElementById("c_debt").value        = comma(Math.round(c.debt));
+    document.getElementById("c_months").value      = c.months;
+    document.getElementById("c_inst_amount").value = comma(Math.round(c.monthly));
+    document.getElementById("c_inst_sum").value    = comma(Math.round(c.total));
+    document.getElementById("c_cheque_amount").value = comma(Math.round(c.chequeAmount));
+
+    // تاریخ چک = تاریخ قرارداد
+    document.getElementById("c_cheque_date").value = document.getElementById("c_date").value;
+
+    // محاسبه و نمایش خسارت دیرکرد بر اساس مبلغ هر قسط
+    var dailyLateFee = Math.round(c.monthly * 0.02); // ۲٪ مبلغ قسط در هر روز تأخیر
+    var monthlyLateFee = dailyLateFee * 30; // تقریباً یک ماه تأخیر
+    var lateFeeEl = document.getElementById("late-fee-result");
+    var lateFeeMonthEl = document.getElementById("late-fee-monthly");
+    if (lateFeeEl && lateFeeMonthEl) {
+      lateFeeEl.textContent = "خسارت تأخیر روزانه بر اساس مبلغ هر قسط: " + comma(dailyLateFee) + " تومان";
+      lateFeeMonthEl.textContent = "(خسارت ماهانه‌ی تقریبی تأخیر: " + comma(monthlyLateFee) + " تومان)";
+    }
+
+    buildSchedule(c.months, c.monthly);
+  }
+
+  // تنظیم اولیه تاریخ شمسی در بارگذاری صفحه
+  window.addEventListener("load", ()=>{
+    let t = todayJalaliString();
+    document.getElementById("c_date").value = t;
+    document.getElementById("c_cheque_date").value = t;
+  });
+</script>
+
+</body>
+</html>
